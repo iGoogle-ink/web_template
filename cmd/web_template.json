@@ -1,21 +1,21 @@
 {
-  "project_name": "web_template",
-  "redis": {
-    "addr": "localhost:6379",
-    "password": "",
-    "db": 0
+  "ProjectName": "web_template",
+  "Redis": {
+    "Addr": "localhost:6379",
+    "Password": "",
+    "DB": 0
   },
-  "mysql": [
-    {
-      "driver": "mysql",
-      "dsn": "root:Ming521.@tcp(127.0.0.1:3306)/bilibili_tv?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4"
-    },
-    {
-      "driver": "mysql",
-      "dsn": "root:Ming521.@tcp(127.0.0.1:3306)/bilibili_test?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4"
-    }
-  ],
-  "exclude": [
-    "node_modules"
+  "DB": {
+    "Driver": "mysql",
+    "Dsn": "root:Ming521.@tcp(127.0.0.1:3306)/bilibili_test?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4",
+    "ShowSQL": true,
+    "Idle": 10
+  },
+  "HTTP": {
+    "Port": ":2333"
+  },
+  "NotifyURL": [
+    "url",
+    "url2"
   ]
 }

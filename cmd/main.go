@@ -1,12 +1,14 @@
 package main
 
 import (
-	"web_template/config"
+	"web_template/conf"
+	"web_template/http"
 )
 
 func main() {
-	err := config.ParseConfig()
+	err := conf.ParseConfig()
 	if err != nil {
 		panic(err)
 	}
+	http.Init(conf.Conf)
 }
