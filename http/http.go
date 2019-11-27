@@ -8,15 +8,23 @@ import (
 	"web_template/conf"
 	"web_template/ecode"
 	"web_template/model"
+	"web_template/pkg"
 	"web_template/service"
 )
 
 var (
-	s *service.Service
+	commonSvc *service.Service
+	config    *conf.Config
 )
 
-func Init(c *conf.Config) {
-	initService(c)
+type Server struct {
+	Service *service.Service
+
+	// some other Service
+}
+
+func Init(c *conf.Config, svr *Server) {
+	initService(c, svr)
 	e := echo.New()
 	e.Use(middleware.Recover(), middleware.CORS(), middleware.CSRF(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
@@ -27,22 +35,29 @@ func Init(c *conf.Config) {
 	}
 }
 
-func router(e *echo.Echo) {
-	e.GET("/ping", ping)
-	stu := e.Group("/student" /*s.KeyAuth()*/)
-	{
-		stu.GET("/list", studentList)
-		stu.GET("/id", studentById)
-	}
+func initService(c *conf.Config, svr *Server) {
+	commonSvc = svr.Service
+	config = c
 }
 
-func initService(c *conf.Config) {
-	s = service.New(c)
-}
-
-func ping(c echo.Context) error {
-	return c.JSON(http.StatusOK, &model.ReturnData{
-		Code:    ecode.OK,
-		Message: "Ping Ok",
+func keyAuth() echo.MiddlewareFunc {
+	return middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
+		Skipper:   middleware.DefaultSkipper,
+		Validator: commonSvc.KeyAuthValidator,
+		KeyLookup: "header:" + pkg.AuthKey,
 	})
+}
+
+func JSON(c echo.Context, data interface{}, err error) error {
+	codes := ecode.AnalyseError(err)
+	d := &model.ReturnData{
+		Code:    codes.Code(),
+		Message: codes.Message(),
+		Data:    data,
+	}
+	return c.JSON(http.StatusOK, d)
+}
+
+func String(c echo.Context, statusCode int, msg string) error {
+	return c.String(statusCode, msg)
 }

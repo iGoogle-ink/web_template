@@ -12,7 +12,7 @@
     "Idle": 10
   },
   "HTTP": {
-    "Port": ":2333"
+    "Port": ":2233"
   },
   "NotifyURL": [
     "url",

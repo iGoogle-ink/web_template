@@ -2,20 +2,22 @@ package service
 
 import (
 	"log"
-	"strconv"
 	"time"
 
-	"github.com/pkg/errors"
+	"web_template/ecode"
 	"web_template/model"
 )
 
 func (s *Service) loadStudent() {
-	// mock data
-	stu := make(map[int]string)
-	for i := 1; i <= 100; i++ {
-		stu[i] = "jerry-" + strconv.Itoa(i)
+	stus, err := s.dao.StudentList()
+	if err != nil {
+		log.Println("Load Students Error :", err)
+		return
 	}
-	s.student = stu
+	s.studentList = stus
+	for _, v := range stus {
+		s.studentMap[v.Id] = v.Name
+	}
 }
 
 func (s *Service) loadStudentProc() {
@@ -27,24 +29,23 @@ func (s *Service) loadStudentProc() {
 }
 
 func (s *Service) StudentList() (rsp *model.StudentRsp, err error) {
-	rsp = &model.StudentRsp{
-		StudentList: make([]*model.Student, 0),
+	if s.studentList == nil {
+		s.loadStudent()
 	}
-	for k, v := range s.student {
-		rsp.StudentList = append(rsp.StudentList, &model.Student{
-			Id:   k,
-			Name: v,
-		})
+	rsp = &model.StudentRsp{
+		StudentList: s.studentList,
 	}
 	return rsp, nil
 }
 func (s *Service) StudentById(id int) (rsp *model.Student, err error) {
-	if _, ok := s.student[id]; !ok {
-		return nil, errors.New("No this Student")
+	if len(s.studentMap) == 0 {
+		s.loadStudent()
 	}
-	rsp = &model.Student{
-		Id:   id,
-		Name: s.student[id],
+	if v, ok := s.studentMap[id]; ok {
+		rsp = &model.Student{
+			Id:   id,
+			Name: v,
+		}
 	}
-	return rsp, nil
+	return nil, ecode.NothingFound
 }

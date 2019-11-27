@@ -21,7 +21,6 @@ func New(c *conf.Config) (d *Dao) {
 		DB:    initDB(c.DB),
 		Redis: initRedis(c.Redis),
 	}
-	// todo init some grpc conn and so on
 	return d
 }
 
