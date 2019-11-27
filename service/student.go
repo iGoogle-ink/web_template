@@ -32,6 +32,9 @@ func (s *Service) StudentList() (rsp *model.StudentRsp, err error) {
 	if s.studentList == nil {
 		s.loadStudent()
 	}
+	if len(s.studentList) == 0 {
+		return nil, ecode.NothingFound
+	}
 	rsp = &model.StudentRsp{
 		StudentList: s.studentList,
 	}
