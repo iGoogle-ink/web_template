@@ -22,8 +22,8 @@ func (s *Service) loadStudent() {
 
 func (s *Service) loadStudentProc() {
 	for {
-		time.Sleep(time.Second * 10)
-		log.Println("Reload Data Loop")
+		time.Sleep(time.Duration(s.c.ReloadTime) * time.Second)
+		log.Println("Reload Student Data")
 		s.loadStudent()
 	}
 }
@@ -49,6 +49,7 @@ func (s *Service) StudentById(id int) (rsp *model.Student, err error) {
 			Id:   id,
 			Name: v,
 		}
+		return rsp, nil
 	}
 	return nil, ecode.NothingFound
 }

@@ -18,6 +18,7 @@ type Config struct {
 	DB          *DB
 	Redis       *Redis
 	HTTP        *HTTPServer
+	ReloadTime  int
 	NotifyURL   []string
 }
 

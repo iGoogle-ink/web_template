@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"github.com/labstack/echo/v4"
+	"web_template/ecode"
 )
 
 func studentList(c echo.Context) error {
@@ -13,7 +14,13 @@ func studentList(c echo.Context) error {
 
 func studentById(c echo.Context) error {
 	pId := c.QueryParam("id")
-	id, _ := strconv.Atoi(pId)
+	if pId == "" {
+		return ecode.RequestErr
+	}
+	id, err := strconv.Atoi(pId)
+	if err != nil {
+		return ecode.RequestErr
+	}
 	rsp, err := commonSvc.StudentById(id)
 	return JSON(c, rsp, err)
 }

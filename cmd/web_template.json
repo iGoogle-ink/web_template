@@ -8,12 +8,13 @@
   "DB": {
     "Driver": "mysql",
     "Dsn": "jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_test?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4",
-    "ShowSQL": true,
+    "ShowSQL": false,
     "Idle": 10
   },
   "HTTP": {
     "Port": ":2233"
   },
+  "ReloadTime": 10,
   "NotifyURL": [
     "url",
     "url2"
