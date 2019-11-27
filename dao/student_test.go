@@ -6,13 +6,14 @@ import (
 )
 
 func TestDao_StudentList(t *testing.T) {
-
 	stus, err := dao.StudentList()
 	if err != nil {
 		fmt.Println("StudentList err:", err)
 		return
 	}
-	fmt.Println("StudentList:", stus)
+	for _, v := range stus {
+		fmt.Println("Student:", *v)
+	}
 }
 
 func TestDao_StudentById(t *testing.T) {
@@ -24,5 +25,5 @@ func TestDao_StudentById(t *testing.T) {
 		fmt.Println("StudentById err:", err)
 		return
 	}
-	fmt.Println("StudentById:", stu)
+	fmt.Println("StudentById:", *stu)
 }

@@ -40,6 +40,7 @@ type HTTPServer struct {
 
 // 解析配置文件
 func ParseConfig() error {
+	flag.Parse()
 	if filePath == "" {
 		return errors.New("load conf path fail")
 	}
@@ -55,5 +56,4 @@ func ParseConfig() error {
 func init() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	flag.StringVar(&filePath, "conf", "", "conf file path")
-	flag.Parse()
 }
