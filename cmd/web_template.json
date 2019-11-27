@@ -1,8 +1,8 @@
 {
   "ProjectName": "web_template",
   "Redis": {
-    "Addr": "localhost:6379",
-    "Password": "",
+    "Addr": "101.132.174.14:6379",
+    "Password": "IloveJerry2019!",
     "DB": 0
   },
   "DB": {

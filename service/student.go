@@ -28,14 +28,14 @@ func (s *Service) loadStudentProc() {
 	}
 }
 
-func (s *Service) StudentList() (rsp *model.StudentRsp, err error) {
+func (s *Service) StudentList() (rsp *model.StudentListRsp, err error) {
 	if s.studentList == nil {
 		s.loadStudent()
 	}
 	if len(s.studentList) == 0 {
 		return nil, ecode.NothingFound
 	}
-	rsp = &model.StudentRsp{
+	rsp = &model.StudentListRsp{
 		StudentList: s.studentList,
 	}
 	return rsp, nil
