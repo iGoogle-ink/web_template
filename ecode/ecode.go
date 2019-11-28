@@ -64,7 +64,7 @@ func errStringToError(e string) Error {
 	}
 	i, err := strconv.Atoi(e)
 	if err != nil {
-		return ServerErr
+		return add(-1, e)
 	}
 	return Error(i)
 }

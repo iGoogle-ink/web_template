@@ -5,23 +5,19 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"web_template/ecode"
-	"web_template/model"
 )
 
-func studentAdd(c echo.Context) error {
-	req := new(model.StudentAddReq)
-	if err := c.Bind(req); err != nil {
-		return JSON(c, nil, ecode.RequestErr)
-	}
-	return JSON(c, nil, commonSvc.StudentAdd(req))
+func teacherAdd(c echo.Context) error {
+	//commonSvc.TeacherAdd()
+	return JSON(c, nil, nil)
 }
 
-func studentList(c echo.Context) error {
+func teacherList(c echo.Context) error {
 	rsp, err := commonSvc.StudentList()
 	return JSON(c, rsp, err)
 }
 
-func studentById(c echo.Context) error {
+func teacherById(c echo.Context) error {
 	pId := c.QueryParam("id")
 	if pId == "" {
 		return ecode.RequestErr

@@ -8,7 +8,6 @@ import (
 	"web_template/conf"
 	"web_template/ecode"
 	"web_template/model"
-	"web_template/pkg"
 	"web_template/service"
 )
 
@@ -26,7 +25,7 @@ type Server struct {
 func Init(c *conf.Config, svr *Server) {
 	initService(c, svr)
 	e := echo.New()
-	e.Use(middleware.Recover(), middleware.CORS(), middleware.CSRF(), middleware.LoggerWithConfig(middleware.LoggerConfig{
+	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
 	}))
 	router(e)
@@ -44,7 +43,7 @@ func keyAuth() echo.MiddlewareFunc {
 	return middleware.KeyAuthWithConfig(middleware.KeyAuthConfig{
 		Skipper:   middleware.DefaultSkipper,
 		Validator: commonSvc.KeyAuthValidator,
-		KeyLookup: "header:" + pkg.AuthKey,
+		KeyLookup: "header:" + model.AuthKey,
 	})
 }
 

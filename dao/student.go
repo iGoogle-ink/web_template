@@ -1,10 +1,17 @@
 package dao
 
-import "web_template/model"
-
-const (
-	_TableStudent = "student"
+import (
+	"web_template/model"
+	"xorm.io/xorm"
 )
+
+func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *model.Student) (id int, err error) {
+	_, err = tx.Table(_TableStudent).Omit("ctime, mtime").InsertOne(stu)
+	if err != nil {
+		return 0, err
+	}
+	return stu.Id, nil
+}
 
 func (d *Dao) StudentById(id int) (stu *model.Student, err error) {
 	stu = new(model.Student)

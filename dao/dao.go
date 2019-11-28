@@ -9,6 +9,12 @@ import (
 	"xorm.io/xorm"
 )
 
+const (
+	_TableBinding = "binding"
+	_TableStudent = "student"
+	_TableTeacher = "teacher"
+)
+
 type Dao struct {
 	c     *conf.Config
 	DB    *xorm.Engine
@@ -47,3 +53,20 @@ func initRedis(c *conf.Redis) (r *redis.Client) {
 	}
 	return r
 }
+
+func (d *Dao) EndTransact(tx *xorm.Session, err error) error {
+	if err != nil {
+		if e := tx.Rollback(); e != nil {
+			return e
+		}
+		return err
+	}
+	return tx.Commit()
+}
+
+//func (d *Dao) Transact(tx *xorm.Session, transactHandler func(tx *xorm.Session) error) error {
+//	if err := transactHandler; err != nil {
+//		return tx.Rollback()
+//	}
+//	return tx.Commit()
+//}
