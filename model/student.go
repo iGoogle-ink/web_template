@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Student struct {
-	Id    int       `json:"id" xorm:"'id'"`
+	Id    int       `json:"id" xorm:"'id' autoincr"`
 	Name  string    `json:"name" xorm:"'name'"`
 	Ctime time.Time `json:"ctime" xorm:"'ctime'"`
 	Mtime time.Time `json:"mtime" xorm:"'mtime'"`

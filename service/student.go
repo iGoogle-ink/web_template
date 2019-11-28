@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -50,7 +49,6 @@ func (s *Service) StudentAdd(req *model.StudentAddReq) (err error) {
 			log.Printf("s.dao.TxStudentInsert(%v),Err(%v)\n", stu, err)
 			return err
 		}
-		fmt.Println("studentId:", studentId)
 		if err = s.dao.TxAddBinding(tx, model.BindTypeTeacherStudent, req.TeacherId, studentId); err != nil {
 			log.Printf("s.dao.TxAddBinding(type:%d,teacherId:%d,studentId:%d),Err(%v)\n", model.BindTypeTeacherStudent, req.TeacherId, studentId, err)
 			return err

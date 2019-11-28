@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Teacher struct {
-	Id      int       `json:"id" xorm:"'id'"`
+	Id      int       `json:"id" xorm:"'id' autoincr"`
 	Name    string    `json:"name" xorm:"'name'"`
 	Subject string    `json:"subject" xorm:"'subject'"`
 	Ctime   time.Time `json:"ctime" xorm:"'ctime'"`
