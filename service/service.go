@@ -12,14 +12,14 @@ type Service struct {
 
 	// 数据初始化，1W 条以上数据，存Redis，数据里小，可以存内存
 	studentList []*model.Student
-	studentMap  map[int]string // key:id,value:name
+	studentMap  map[int]*model.Student // key:id,value:name
 }
 
 func New(c *conf.Config) (s *Service) {
 	s = &Service{
 		c:          c,
 		dao:        dao.New(c),
-		studentMap: make(map[int]string),
+		studentMap: make(map[int]*model.Student),
 	}
 
 	// some data need init when service new
