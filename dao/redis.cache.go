@@ -46,7 +46,7 @@ func (d *Dao) AddCacheTeacher(tchs []*model.Teacher) (err error) {
 	if err = d.Redis.ZAdd(_RedisKeyTeacher, mems...).Err(); err != nil {
 		return err
 	}
-	if err = d.Redis.Expire(_RedisKeyTeacher, time.Second*60).Err(); err != nil {
+	if err = d.Redis.Expire(_RedisKeyTeacher, time.Duration(d.c.RedisExpire)*time.Second).Err(); err != nil {
 		return err
 	}
 	return nil

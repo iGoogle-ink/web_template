@@ -15,6 +15,7 @@
     "Port": ":2233"
   },
   "ReloadTime": 10,
+  "RedisExpire": 600,
   "NotifyURL": [
     "url",
     "url2"
