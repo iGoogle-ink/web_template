@@ -5,15 +5,19 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"web_template/ecode"
+	"web_template/model"
 )
 
 func teacherAdd(c echo.Context) error {
-	//commonSvc.TeacherAdd()
-	return JSON(c, nil, nil)
+	req := new(model.TeacherAddReq)
+	if err := c.Bind(req); err != nil {
+		return JSON(c, nil, ecode.RequestErr)
+	}
+	return JSON(c, nil, commonSvc.TeacherAdd(req))
 }
 
 func teacherList(c echo.Context) error {
-	rsp, err := commonSvc.StudentList()
+	rsp, err := commonSvc.TeacherList()
 	return JSON(c, rsp, err)
 }
 

@@ -54,19 +54,25 @@ func initRedis(c *conf.Redis) (r *redis.Client) {
 	return r
 }
 
-func (d *Dao) EndTransact(tx *xorm.Session, err error) error {
-	if err != nil {
-		if e := tx.Rollback(); e != nil {
-			return e
-		}
+func (d *Dao) Transact(transactHandler func(tx *xorm.Session) error) (err error) {
+	session := d.DB.NewSession()
+	if err = session.Begin(); err != nil {
 		return err
 	}
-	return tx.Commit()
-}
 
-//func (d *Dao) Transact(tx *xorm.Session, transactHandler func(tx *xorm.Session) error) error {
-//	if err := transactHandler; err != nil {
-//		return tx.Rollback()
-//	}
-//	return tx.Commit()
-//}
+	defer func() {
+		if p := recover(); p != nil {
+			_ = session.Rollback()
+			log.Println("Panic In Transact:", p)
+			return
+		}
+		if err != nil {
+			_ = session.Rollback()
+			return
+		}
+		err = session.Commit()
+	}()
+
+	err = transactHandler(session)
+	return err
+}

@@ -38,11 +38,8 @@ func (s *Service) StudentAdd(req *model.StudentAddReq) (err error) {
 	if !has {
 		return errors.New("未找到该老师")
 	}
-	session := s.dao.DB.NewSession()
-	if err = session.Begin(); err != nil {
-		return err
-	}
-	err = func(tx *xorm.Session) error {
+
+	err = s.dao.Transact(func(tx *xorm.Session) error {
 		stu := req.FormatToStudent()
 		studentId, err := s.dao.TxStudentInsert(tx, stu)
 		if err != nil {
@@ -54,8 +51,8 @@ func (s *Service) StudentAdd(req *model.StudentAddReq) (err error) {
 			return err
 		}
 		return nil
-	}(session)
-	if err = s.dao.EndTransact(session, err); err != nil {
+	})
+	if err != nil {
 		return err
 	}
 	// todo something other
