@@ -9,7 +9,7 @@ import (
 	"web_template/model"
 )
 
-func (d *Dao) CacheTeacher(stime, etime time.Time, offset, count int64) (tchs []*model.Teacher, err error) {
+func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (tchs []*model.Teacher, err error) {
 	var results []string
 	err = d.Redis.ZRangeByScore(_RedisKeyTeacher, &redis.ZRangeBy{
 		Min:    strconv.FormatInt(stime.Unix(), 10),
@@ -17,6 +17,22 @@ func (d *Dao) CacheTeacher(stime, etime time.Time, offset, count int64) (tchs []
 		Offset: offset,
 		Count:  count,
 	}).ScanSlice(&results)
+	if err != nil {
+		return nil, err
+	}
+	for _, t := range results {
+		teacher := new(model.Teacher)
+		err := json.Unmarshal([]byte(t), teacher)
+		if err != nil {
+			return nil, err
+		}
+		tchs = append(tchs, teacher)
+	}
+	return tchs, nil
+}
+func (d *Dao) CacheTeacher(start, end int64) (tchs []*model.Teacher, err error) {
+	var results []string
+	err = d.Redis.ZRange(_RedisKeyTeacher, start, end).ScanSlice(&results)
 	if err != nil {
 		return nil, err
 	}
