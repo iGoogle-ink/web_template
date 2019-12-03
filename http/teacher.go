@@ -17,7 +17,17 @@ func teacherAdd(c echo.Context) error {
 }
 
 func teacherList(c echo.Context) error {
-	rsp, err := commonSvc.TeacherList()
+	start := c.QueryParam("start")
+	end := c.QueryParam("end")
+	startInt64, err := strconv.ParseInt(start, 10, 64)
+	if err != nil {
+		return JSON(c, nil, ecode.RequestErr)
+	}
+	endInt64, err := strconv.ParseInt(end, 10, 64)
+	if err != nil {
+		return JSON(c, nil, ecode.RequestErr)
+	}
+	rsp, err := commonSvc.TeacherList(startInt64, endInt64)
 	return JSON(c, rsp, err)
 }
 

@@ -1,8 +1,9 @@
 package service
 
 import (
-	"log"
+	"fmt"
 
+	"web_template/ecode"
 	"web_template/model"
 )
 
@@ -13,16 +14,25 @@ func (s *Service) TeacherAdd(req *model.TeacherAddReq) (err error) {
 	return err
 }
 
-func (s *Service) TeacherList() (rsp *model.TeacherListRsp, err error) {
-	tchs, err := s.dao.CacheTeacher(0, 100)
-	if err != nil || len(tchs) == 0 {
-		log.Println("s.dao.CacheTeacher: err or empty:", err)
-		err = nil
+func (s *Service) TeacherList(start, end int64) (rsp *model.TeacherListRsp, err error) {
+	var tchs []*model.Teacher
+	tchs, err = s.dao.CacheTeacher(start, end)
+	if err != nil {
+		return nil, err
+	}
+	if len(tchs) == 0 {
+		fmt.Println("数据回源")
 		tchs, err = s.dao.TeacherList()
 		if err != nil {
 			return nil, err
 		}
-		s.dao.AddCacheTeacher(tchs)
+		if len(tchs) == 0 {
+			return nil, ecode.NothingFound
+		}
+		cacheErr := s.dao.AddCacheTeacher(tchs)
+		if cacheErr != nil {
+			fmt.Println("缓存添加失败")
+		}
 	}
 	rsp = new(model.TeacherListRsp)
 	for _, v := range tchs {
