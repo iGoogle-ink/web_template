@@ -54,6 +54,15 @@ func initRedis(c *conf.Redis) (r *redis.Client) {
 	return r
 }
 
+func (d *Dao) Close() {
+	if d.DB != nil {
+		d.DB.Close()
+	}
+	if d.Redis != nil {
+		d.Redis.Close()
+	}
+}
+
 func (d *Dao) Transact(transactHandler func(tx *xorm.Session) error) (err error) {
 	session := d.DB.NewSession()
 	if err = session.Begin(); err != nil {

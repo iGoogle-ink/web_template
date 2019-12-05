@@ -22,6 +22,10 @@ type Server struct {
 	// some other Service
 }
 
+func (s *Server) Close() {
+	s.Service.Close()
+}
+
 func Init(c *conf.Config, svr *Server) {
 	initService(c, svr)
 	e := echo.New()

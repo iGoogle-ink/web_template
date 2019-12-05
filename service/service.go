@@ -27,3 +27,9 @@ func New(c *conf.Config) (s *Service) {
 	go s.loadStudentProc()
 	return s
 }
+
+func (s *Service) Close() {
+	if s.dao != nil {
+		s.dao.Close()
+	}
+}
