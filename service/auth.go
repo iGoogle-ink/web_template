@@ -4,9 +4,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/labstack/echo/v4"
 	"web_template/ecode"
 	"web_template/model"
+
+	"github.com/labstack/echo/v4"
 )
 
 func (s *Service) KeyAuthValidator(session string, c echo.Context) (bool, error) {

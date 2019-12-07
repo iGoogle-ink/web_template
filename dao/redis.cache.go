@@ -5,8 +5,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/go-redis/redis/v7"
 	"web_template/model"
+
+	"github.com/go-redis/redis/v7"
 )
 
 func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (tchs []*model.Teacher, err error) {

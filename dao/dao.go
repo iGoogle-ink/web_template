@@ -3,9 +3,10 @@ package dao
 import (
 	"log"
 
+	"web_template/conf"
+
 	"github.com/go-redis/redis/v7"
 	_ "github.com/go-sql-driver/mysql"
-	"web_template/conf"
 	"xorm.io/xorm"
 )
 

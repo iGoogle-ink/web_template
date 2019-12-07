@@ -3,9 +3,10 @@ package http
 import (
 	"strconv"
 
-	"github.com/labstack/echo/v4"
 	"web_template/ecode"
 	"web_template/model"
+
+	"github.com/labstack/echo/v4"
 )
 
 func studentAdd(c echo.Context) error {
