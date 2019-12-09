@@ -4,7 +4,7 @@ import "github.com/labstack/echo/v4"
 
 func router(e *echo.Echo) {
 	e.GET("/ping", ping)
-	stu := e.Group("/student" /*keyAuth()*/) // keyAuth add if you need
+	stu := e.Group("/student" /*, keyAuth()*/) // keyAuth add if you need
 	{
 		stu.POST("/add", studentAdd)
 		stu.GET("/list", studentList)

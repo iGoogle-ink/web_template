@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -11,6 +12,12 @@ import (
 )
 
 func (s *Service) KeyAuthValidator(session string, c echo.Context) (bool, error) {
+	cookie, err := c.Cookie("cookie")
+	if err != nil {
+		return false, json(c, ecode.CookieErr)
+	}
+	fmt.Println("cookie:", cookie.String())
+
 	id, err := s.dao.Redis.Get(model.AuthKey + session).Int64()
 	if err != nil {
 		return false, json(c, ecode.Unauthorized)

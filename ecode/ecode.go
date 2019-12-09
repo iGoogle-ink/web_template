@@ -7,6 +7,7 @@ import (
 var (
 	errorMap     = make(map[int]string)
 	OK           = add(0, "SUCCESS")
+	CookieErr    = add(302, "Cookie 失效")
 	RequestErr   = add(400, "请求错误")
 	Unauthorized = add(401, "未授权")
 	NothingFound = add(404, "啥都木有")
