@@ -10,6 +10,9 @@ import (
 func (s *Service) TeacherAdd(req *model.TeacherAddReq) (err error) {
 	tch := req.FormatToTeacher()
 	_, err = s.dao.TeacherInsert(tch)
+	if err != nil {
+		fmt.Printf("s.dao.TeacherInsert(%v),err:%v.\n", *tch, err)
+	}
 	// todo something
 	return err
 }
