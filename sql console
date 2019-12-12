@@ -1,0 +1,177 @@
+CREATE DATABASE `bilibili_tv` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+use bilibili_tv;
+
+CREATE TABLE `tv_price_config`
+(
+    `id`           int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键id',
+    `pid`          int(11)          NOT NULL DEFAULT '0' COMMENT '父id，为空表示为原价信息',
+    `platform`     tinyint(4)       NOT NULL DEFAULT '1' COMMENT '类型: 1:tv安卓 2:公众号',
+    `product_name` varchar(20)      NOT NULL DEFAULT '' COMMENT '产品展示名',
+    `product_id`   varchar(64)      NOT NULL DEFAULT '' COMMENT '产品id',
+    `suit_type`    tinyint(4)       NOT NULL DEFAULT '0' COMMENT '适用人群: 0.所有用户 1.旧客 2.新客 3.续期旧客 4.续期新客 5.套餐旧客 6.套餐新客 10.主站vip专项',
+    `month`        int(11)          NOT NULL DEFAULT '0' COMMENT '月份单位',
+    `sub_type`     tinyint(4)       NOT NULL DEFAULT '0' COMMENT '订阅类型：0.其他，1.连续包月',
+    `price`        int(11)          NOT NULL DEFAULT '0' COMMENT '价格，pid为0表示原价,单位:分',
+    `selected`     tinyint(4)       NOT NULL DEFAULT '0' COMMENT '选中状态: 0.未选中，1.选中',
+    `remark`       varchar(45)      NOT NULL DEFAULT '' COMMENT '促销tip',
+    `status`       tinyint(4)       NOT NULL DEFAULT '1' COMMENT '状态，0:有效,1:失效',
+    `superscript`  varchar(8)       NOT NULL DEFAULT '' COMMENT '角标',
+    `operator`     varchar(45)      NOT NULL DEFAULT '' COMMENT '操作者',
+    `oper_id`      int(11)          NOT NULL DEFAULT '0' COMMENT '操作者id',
+    `stime`        datetime         NOT NULL COMMENT '折扣开始时间',
+    `etime`        datetime         NOT NULL COMMENT '折扣结束时间',
+    `ctime`        timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `mtime`        timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后修改时间',
+    `rank`         mediumint(6)     NOT NULL DEFAULT '0' COMMENT '排序权重',
+    `comments`     varchar(45)      NOT NULL DEFAULT '' COMMENT '运营备注',
+    PRIMARY KEY (`id`),
+    KEY `ix_mtime` (`mtime`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8 COMMENT ='价格配置表';
+
+alter table tv_price_config
+    add first_price int(11) NOT NULL DEFAULT 0 COMMENT '连续包月首月价格，sub_type 为1时，此字段生效';
+
+alter table tv_ep_season
+    add ott_only int default 0 not null comment 'ott独享，0：非独享，1：独享';
+
+set session sql_mode = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+select *
+from tv_ep_season
+where is_deleted = 0
+  and valid = 1
+  and `check` = 1;
+
+alter table tv_channel_v2
+    add splash2_id int(11) default 0 not null comment '关联二段闪屏的id';
+
+
+CREATE TABLE IF NOT EXISTS tv_splash2
+(
+    id             int(11) unsigned                              not null auto_increment primary key comment '自增长id',
+    splash_name    varchar(32)         default ''                not null comment '闪屏名称',
+    resource_type  tinyint(4) unsigned default 0                 not null comment '资源类型<1：图片，2：视频>',
+    resource_value varchar(128)        default ''                not null comment '闪屏资源地址<1：图片地址，2：视频播放地址>',
+    biz_id         varchar(32)         default ''                not null comment '视频biz_id',
+    duration       int(11)             default 0                 not null comment '闪屏播放时长，单位秒，默认0则按照原视频时长播放',
+    skip_duration  int(11)             default 0                 not null comment '可跳过闪屏时长，单位秒，默认0则可理解跳过闪屏',
+    redirect_type  tinyint(4) unsigned default 0                 not null comment '闪屏跳转类型<0：无跳转，1：会员购商品页，2：PGC详情页，3：UGC详情页，4：UP主空间页，5：轮播专题页，6：点播专题页，7：H5活动页>',
+    redirect_value varchar(256)        default ''                not null comment '对应闪屏跳转类型的跳转链接或值',
+    up_status      tinyint(4) unsigned default 0                 not null comment '上下架状态<0：下架，1：上架>',
+    is_deleted     tinyint(4) unsigned default 0                 not null comment '0=默认, 1=已删除',
+    ctime          timestamp           default CURRENT_TIMESTAMP not null comment '创建时间',
+    mtime          timestamp           default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '最后修改时间',
+    KEY ix_mtime (mtime),
+    KEY ix_splash_name (splash_name)
+) COMMENT '二段闪屏表';
+
+alter table tv_splash2
+    change resource_value resource_value varchar(128) default '' not null comment '闪屏资源图片地址或视频upos_uri',
+    add biz_id                           varchar(32)  default '' not null comment '视频biz_id';
+
+CREATE TABLE IF NOT EXISTS tv_ssa
+(
+    id           int(11) unsigned                              not null auto_increment primary key comment '自增长ID',
+    file_name    varchar(32)         default ''                not null comment '视频名称',
+    biz_id       varchar(32)         default ''                not null comment '视频biz_id',
+    upos_uri     varchar(128)        default ''                not null comment '视频upos_uri',
+    xcode_status tinyint(4) unsigned default 0                 not null comment '转码状态<0：转码中，1：转码完成，2：转码失败>',
+    ctime        timestamp           default CURRENT_TIMESTAMP not null comment '创建时间',
+    mtime        timestamp           default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '最后修改时间',
+    UNIQUE KEY uk_biz_id (biz_id),
+    KEY ix_mtime (mtime)
+) COMMENT 'OTT闪屏视频表';
+
+alter table tv_ssa
+    drop column file_name;
+
+CREATE TABLE `tv_live`
+(
+    `id`            int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `title`         varchar(16)      NOT NULL DEFAULT '' COMMENT '直播标题',
+    `cover`         varchar(128)     NOT NULL DEFAULT '' COMMENT '直播封面',
+    `type_id`       int(11)          NOT NULL DEFAULT '0' COMMENT '所属二级分区',
+    `valid`         tinyint(4)       NOT NULL DEFAULT '0' COMMENT '0-下架 1-上架',
+    `live_room`     int(11)          NOT NULL DEFAULT '0' COMMENT '直播房间号',
+    `delay_seconds` int(11)          NOT NULL DEFAULT '0' COMMENT '直播流延时时间',
+    `is_deleted`    tinyint(4)       NOT NULL DEFAULT '0' COMMENT '0-正常 1-删除',
+    `ctime`         timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `mtime`         timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    PRIMARY KEY (`id`),
+    KEY `ix_mtime` (`mtime`),
+    KEY `ix_live_room` (`live_room`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 8
+  DEFAULT CHARSET = utf8 COMMENT ='直播资源表';
+
+CREATE TABLE `bestv_season`
+(
+    `id`                  int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+    `sid`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'bestv season ID',
+    `attr`                tinyint(4)       NOT NULL DEFAULT '0' COMMENT '1-单片 2-连续剧',
+    `status`              tinyint(4)       NOT NULL DEFAULT '0' COMMENT '0-下线 1-上线',
+    `code`                int(11) unsigned NOT NULL DEFAULT '0' COMMENT '内容唯一标示',
+    `ep_cnt`              int(11)          NOT NULL DEFAULT '0' COMMENT '当前剧集数',
+    `ep_total`            int(11)          NOT NULL DEFAULT '0' COMMENT '总剧集数',
+    `title`               varchar(64)      NOT NULL DEFAULT '' COMMENT '标题',
+    `search_name`         varchar(64)      NOT NULL DEFAULT '' COMMENT '标题',
+    `desc_info`           varchar(128)     NOT NULL DEFAULT '' COMMENT '描述',
+    `duration`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '时长',
+    `tags`                varchar(255)     NOT NULL DEFAULT '' COMMENT '标签',
+    `directors`           varchar(255)     NOT NULL DEFAULT '' COMMENT '导演',
+    `actors`              varchar(255)     NOT NULL DEFAULT '' COMMENT '主演',
+    `area`                varchar(32)      NOT NULL DEFAULT '' COMMENT '地区',
+    `language`            varchar(32)      NOT NULL DEFAULT '' COMMENT '语言',
+    `pub_date`            varchar(16)      NOT NULL DEFAULT '' COMMENT '上映时间',
+    `stype_id`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '二级栏目id',
+    `ptype_id`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '一级栏目id',
+    `fdn_code`            varchar(32)      NOT NULL DEFAULT '' COMMENT 'fdn code',
+    `xbox_image1`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image1',
+    `xbox_image2`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image2',
+    `xbox_image3`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image3',
+    `xbox_image4`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image4',
+    `xbox_image5`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image5',
+    `xbox_image6`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image6',
+    `xbox_image7`         varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image7',
+    `xbox_image_1138_640` varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image_1138_640',
+    `xbox_image_424_640`  varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image_424_640',
+    `xbox_image_640_640`  varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image_640_640',
+    `xbox_image_424_100`  varchar(64)      NOT NULL DEFAULT '' COMMENT 'xbox_image_424_100',
+    `imgth`               varchar(64)      NOT NULL DEFAULT '' COMMENT 'imgth',
+    `imgpo`               varchar(64)      NOT NULL DEFAULT '' COMMENT 'imgpo',
+    `imgre`               varchar(64)      NOT NULL DEFAULT '' COMMENT 'imgre',
+    `imghp`               varchar(64)      NOT NULL DEFAULT '' COMMENT 'imghp',
+    `small_image1`        varchar(64)      NOT NULL DEFAULT '' COMMENT 'small_image1',
+    `small_image2`        varchar(64)      NOT NULL DEFAULT '' COMMENT 'small_image2',
+    `small_image3`        varchar(64)      NOT NULL DEFAULT '' COMMENT 'small_image3',
+    `big_image1`          varchar(64)      NOT NULL DEFAULT '' COMMENT 'big_image1',
+    `big_image2`          varchar(64)      NOT NULL DEFAULT '' COMMENT 'big_image2',
+    `big_image3`          varchar(64)      NOT NULL DEFAULT '' COMMENT 'big_image3',
+    `charge_fee`          tinyint(4)       NOT NULL DEFAULT '0' COMMENT '0-免费 1-收费',
+    `charge_stime`        int(11)          NOT NULL DEFAULT '0' COMMENT '收费开始时间',
+    `charge_etime`        int(11)          NOT NULL DEFAULT '0' COMMENT '收费结束时间',
+    `is_deleted`          tinyint(4)       NOT NULL DEFAULT '0' COMMENT '0-正常 1-删除',
+    `mtime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+    `ctime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_sid` (`sid`),
+    KEY `ix_mtime` (`mtime`)
+) ENGINE = InnoDB
+  AUTO_INCREMENT = 15986
+  DEFAULT CHARSET = utf8 COMMENT ='百视通season表';
+
+update tv_splash2
+set splash_name    = '测试视频啊',
+    resource_type  = 2,
+    resource_value = 'upos://ssaxcode/0191111at74eed211ed4923efeaa54a6-1-SPLASH.mp4',
+    duration       = 15,
+    skip_duration  = 5,
+    redirect_type  = 3,
+    redirect_value = 33465,
+    mtime = now()
+where id = 9;
+
+show create database bilibili_test;
