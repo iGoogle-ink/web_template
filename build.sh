@@ -18,9 +18,6 @@ function build_docker {
 
     echo "Building docker image..."
     docker build -t $IMAGE_FULL_NAME .
-
-#    echo "Push image to registry"
-#    docker push $IMAGE_FULL_NAME
 }
 
 set -e
@@ -29,12 +26,12 @@ echo "Building application..."
 
 go mod tidy
 
-CGO_ENABLED=0 GOOS=linux go build -o main .
+GOOS=linux go build -o application cmd/main.go
 
 build_docker "latest"
 
 echo "Cleanup main..."
 
-rm main
+rm -f application
 
 echo "Done"
