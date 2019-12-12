@@ -12,7 +12,7 @@
     "Idle": 10
   },
   "HTTP": {
-    "Port": ":2233"
+    "Port": ":80"
   },
   "ReloadTime": 10,
   "RedisExpire": 60,
