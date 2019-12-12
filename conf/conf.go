@@ -2,7 +2,6 @@ package conf
 
 import (
 	"flag"
-	"runtime"
 
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
@@ -56,6 +55,5 @@ func ParseConfig() error {
 }
 
 func init() {
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	flag.StringVar(&filePath, "conf", "", "conf file path")
 }
