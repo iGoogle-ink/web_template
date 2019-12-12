@@ -25,8 +25,6 @@ function build_docker {
 
 set -e
 
-cd /root/code/web_template
-
 echo "Building application..."
 
 CGO_ENABLED=0 GOOS=linux go build -o main .
