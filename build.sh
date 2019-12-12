@@ -27,6 +27,8 @@ set -e
 
 echo "Building application..."
 
+go mod tidy
+
 CGO_ENABLED=0 GOOS=linux go build -o main .
 
 build_docker "latest"
