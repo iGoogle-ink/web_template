@@ -26,7 +26,7 @@ echo "Building application..."
 
 go mod tidy
 
-GOOS=linux go build -o application cmd/main.go
+CGO_ENABLED=0 GOOS=linux go build -o application cmd/main.go
 
 build_docker "latest"
 
