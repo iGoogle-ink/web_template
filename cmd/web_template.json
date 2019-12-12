@@ -1,13 +1,13 @@
 {
   "ProjectName": "web_template",
   "Redis": {
-    "Addr": "101.132.174.14:6379",
+    "Addr": "172.19.146.41:6379",
     "Password": "IloveJerry2019!",
     "DB": 0
   },
   "DB": {
     "Driver": "mysql",
-    "Dsn": "jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_test?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4",
+    "Dsn": "jerry:IloveJerry2019!@tcp(172.19.146.41:3306)/bilibili_test?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4",
     "ShowSQL": false,
     "Idle": 10
   },
