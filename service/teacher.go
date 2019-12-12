@@ -2,6 +2,7 @@ package service
 
 import (
 	"fmt"
+	"log"
 
 	"web_template/ecode"
 	"web_template/model"
@@ -27,6 +28,7 @@ func (s *Service) TeacherList(start, end int64) (rsp *model.TeacherListRsp, err 
 		fmt.Println("数据回源")
 		tchs, err = s.dao.TeacherList()
 		if err != nil {
+			log.Println("s.dao.TeacherList:", err)
 			return nil, err
 		}
 		if len(tchs) == 0 {
@@ -34,7 +36,7 @@ func (s *Service) TeacherList(start, end int64) (rsp *model.TeacherListRsp, err 
 		}
 		cacheErr := s.dao.AddCacheTeacher(tchs)
 		if cacheErr != nil {
-			fmt.Println("缓存添加失败")
+			log.Println("缓存添加失败")
 		}
 	}
 	rsp = new(model.TeacherListRsp)
