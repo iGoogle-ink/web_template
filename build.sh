@@ -30,8 +30,8 @@ GOOS=linux go build -o application cmd/main.go
 
 build_docker "latest"
 
-echo "Cleanup main..."
+echo "Cleanup application..."
 
-rm -f application
+rm application
 
 echo "Done"
