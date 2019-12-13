@@ -1,4 +1,4 @@
-package dao
+package auth
 
 import (
 	"flag"
@@ -6,16 +6,19 @@ import (
 	"testing"
 
 	"web_template/conf"
+	"web_template/dao"
 )
 
-var dao *Dao
+var d *Dao
 
 func TestMain(m *testing.M) {
-	flag.Set("conf", "../cmd/web_template.json")
+	flag.Set("env", "test")
+	flag.Set("conf", "../../cmd/web_template.json")
 	flag.Parse()
 	if err := conf.ParseConfig(); err != nil {
 		panic(err)
 	}
-	dao = New(conf.Conf)
+	rds := dao.InitRedis(conf.Conf.Redis)
+	d = New(conf.Conf, rds)
 	os.Exit(m.Run())
 }

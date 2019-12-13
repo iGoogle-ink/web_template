@@ -1,4 +1,4 @@
-package dao
+package school
 
 import (
 	"testing"

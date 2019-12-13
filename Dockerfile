@@ -5,4 +5,4 @@ COPY cmd/web_template.json /usr/web_template.json
 CMD ["/usr/application", "-conf", "/usr/web_template.json"]
 EXPOSE 80
 
-# docker run -d --restart=unless-stopped -v /etc/localtime:/etc/localtime:ro -p 2233:2233 --name web_template web_template:latest
+# docker run -d --restart=unless-stopped -v /etc/localtime:/etc/localtime:ro -p 2233:2233 --name=web_template web_template:latest

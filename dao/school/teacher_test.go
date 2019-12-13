@@ -1,14 +1,14 @@
-package dao
+package school
 
 import (
 	"fmt"
 	"testing"
 
-	"web_template/model"
+	"web_template/model/school"
 )
 
 func TestDao_TeacherList(t *testing.T) {
-	list, err := dao.TeacherList()
+	list, err := d.TeacherList()
 	if err != nil {
 		fmt.Println("err:", err)
 		return
@@ -19,7 +19,7 @@ func TestDao_TeacherList(t *testing.T) {
 }
 
 func TestDao_TeacherById(t *testing.T) {
-	tch, err := dao.TeacherById(2)
+	tch, err := d.TeacherById(2)
 	if err != nil {
 		fmt.Println("err:", err)
 		return
@@ -28,7 +28,7 @@ func TestDao_TeacherById(t *testing.T) {
 }
 
 func TestDao_TeacherExistById(t *testing.T) {
-	has, err := dao.TeacherExistById(3)
+	has, err := d.TeacherExistById(3)
 	if err != nil {
 		fmt.Println("err:", err)
 		return
@@ -37,11 +37,11 @@ func TestDao_TeacherExistById(t *testing.T) {
 }
 
 func TestDao_TeacherInsert(t *testing.T) {
-	tch := &model.Teacher{
+	tch := &school.Teacher{
 		Name:    "UT测试",
 		Subject: "UT测试学科",
 	}
-	id, err := dao.TeacherInsert(tch)
+	id, err := d.TeacherInsert(tch)
 	if err != nil {
 		fmt.Println("err:", err)
 		return

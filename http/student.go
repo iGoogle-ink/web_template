@@ -4,21 +4,21 @@ import (
 	"strconv"
 
 	"web_template/ecode"
-	"web_template/model"
+	"web_template/model/school"
 
 	"github.com/labstack/echo/v4"
 )
 
 func studentAdd(c echo.Context) error {
-	req := new(model.StudentAddReq)
+	req := new(school.StudentAddReq)
 	if err := c.Bind(req); err != nil {
 		return JSON(c, nil, ecode.RequestErr)
 	}
-	return JSON(c, nil, commonSvc.StudentAdd(req))
+	return JSON(c, nil, schoolSrv.StudentAdd(req))
 }
 
 func studentList(c echo.Context) error {
-	rsp, err := commonSvc.StudentList()
+	rsp, err := schoolSrv.StudentList()
 	return JSON(c, rsp, err)
 }
 
@@ -31,6 +31,6 @@ func studentById(c echo.Context) error {
 	if err != nil {
 		return ecode.RequestErr
 	}
-	rsp, err := commonSvc.StudentById(id)
+	rsp, err := schoolSrv.StudentById(id)
 	return JSON(c, rsp, err)
 }

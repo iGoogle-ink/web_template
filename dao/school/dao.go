@@ -1,4 +1,4 @@
-package dao
+package school
 
 import (
 	"log"
@@ -22,46 +22,13 @@ type Dao struct {
 	Redis *redis.Client
 }
 
-func New(c *conf.Config) (d *Dao) {
+func New(c *conf.Config, db *xorm.Engine, rds *redis.Client) (d *Dao) {
 	d = &Dao{
 		c:     c,
-		DB:    initDB(c.DB),
-		Redis: initRedis(c.Redis),
+		DB:    db,
+		Redis: rds,
 	}
 	return d
-}
-
-func initDB(c *conf.DB) (db *xorm.Engine) {
-	db, err := xorm.NewEngine(c.Driver, c.Dsn)
-	if err != nil {
-		panic(err)
-	}
-	db.ShowSQL(c.ShowSQL)
-	db.SetMaxIdleConns(c.Idle)
-	return db
-}
-
-func initRedis(c *conf.Redis) (r *redis.Client) {
-	r = redis.NewClient(&redis.Options{
-		Addr:     c.Addr,
-		Password: c.Password,
-		DB:       c.Db,
-	})
-	_, err := r.Ping().Result()
-	if err != nil {
-		log.Println("InitRedis Error:", err)
-		panic(err)
-	}
-	return r
-}
-
-func (d *Dao) Close() {
-	if d.DB != nil {
-		d.DB.Close()
-	}
-	if d.Redis != nil {
-		d.Redis.Close()
-	}
 }
 
 func (d *Dao) Transact(transactHandler func(tx *xorm.Session) error) (err error) {

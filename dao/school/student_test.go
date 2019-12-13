@@ -1,4 +1,4 @@
-package dao
+package school
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 )
 
 func TestDao_StudentList(t *testing.T) {
-	stus, err := dao.StudentList()
+	stus, err := d.StudentList()
 	if err != nil {
 		fmt.Println("StudentList err:", err)
 		return
@@ -20,7 +20,7 @@ func TestDao_StudentById(t *testing.T) {
 	var (
 		id = 1
 	)
-	stu, err := dao.StudentById(id)
+	stu, err := d.StudentById(id)
 	if err != nil {
 		fmt.Println("StudentById err:", err)
 		return

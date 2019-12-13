@@ -1,14 +1,14 @@
-package service
+package school
 
 import (
 	"fmt"
 	"log"
 
 	"web_template/ecode"
-	"web_template/model"
+	"web_template/model/school"
 )
 
-func (s *Service) TeacherAdd(req *model.TeacherAddReq) (err error) {
+func (s *Service) TeacherAdd(req *school.TeacherAddReq) (err error) {
 	tch := req.FormatToTeacher()
 	_, err = s.dao.TeacherInsert(tch)
 	if err != nil {
@@ -18,8 +18,8 @@ func (s *Service) TeacherAdd(req *model.TeacherAddReq) (err error) {
 	return err
 }
 
-func (s *Service) TeacherList(start, end int64) (rsp *model.TeacherListRsp, err error) {
-	var tchs []*model.Teacher
+func (s *Service) TeacherList(start, end int64) (rsp *school.TeacherListRsp, err error) {
+	var tchs []*school.Teacher
 	tchs, err = s.dao.CacheTeacher(start, end)
 	if err != nil {
 		return nil, err
@@ -39,9 +39,9 @@ func (s *Service) TeacherList(start, end int64) (rsp *model.TeacherListRsp, err 
 			log.Println("缓存添加失败")
 		}
 	}
-	rsp = new(model.TeacherListRsp)
+	rsp = new(school.TeacherListRsp)
 	for _, v := range tchs {
-		t := new(model.TeacherRsp)
+		t := new(school.TeacherRsp)
 		v.FormatToRsp(t)
 		rsp.TeacherList = append(rsp.TeacherList, t)
 	}
