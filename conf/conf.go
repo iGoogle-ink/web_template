@@ -70,6 +70,11 @@ type QQPay struct {
 	Pkcs12FilePath string
 }
 
+func init() {
+	flag.StringVar(&env, "env", "", "env")
+	flag.StringVar(&filePath, "conf", "", "conf file path")
+}
+
 // 解析配置文件
 func ParseConfig() error {
 	flag.Parse()
@@ -83,9 +88,4 @@ func ParseConfig() error {
 		return err
 	}
 	return viper.UnmarshalKey(env, Conf)
-}
-
-func init() {
-	flag.StringVar(&env, "env", "", "env")
-	flag.StringVar(&filePath, "conf", "", "conf file path")
 }

@@ -31,7 +31,7 @@ type Server struct {
 }
 
 func Init(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
-	initService(db, rds)
+	initService(c, db, rds)
 	e := echo.New()
 	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
@@ -42,10 +42,11 @@ func Init(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
 	}
 }
 
-func initService(db *xorm.Engine, rds *redis.Client) {
-	schoolSrv = school.New(config, db, rds)
-	authSrv = auth.New(config, rds)
-	paySrv = pay.New(config, db, rds)
+func initService(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
+	config = c
+	schoolSrv = school.New(c, db, rds)
+	authSrv = auth.New(c, rds)
+	paySrv = pay.New(c, db, rds)
 }
 
 func keyAuth() echo.MiddlewareFunc {

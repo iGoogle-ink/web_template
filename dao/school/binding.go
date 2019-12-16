@@ -18,3 +18,21 @@ func (d *Dao) TxAddBinding(tx *xorm.Session, bindType, pid, cid int) (err error)
 	}
 	return nil
 }
+
+func (d *Dao) GetBindings(bindType int) (bindingList []*model.Binding, err error) {
+	bindingList = make([]*model.Binding, 0)
+	if err = d.DB.Table(_TableBinding).
+		Where("is_delete = 0").And("bind_type = ?", bindType).Find(&bindingList); err != nil {
+		return nil, err
+	}
+	return bindingList, nil
+}
+
+func (d *Dao) GetBindingsByPid(bindType, pid int) (bindingList []*model.Binding, err error) {
+	bindingList = make([]*model.Binding, 0)
+	if err = d.DB.Table(_TableBinding).
+		Where("is_delete = 0").And("bind_type = ?", bindType).And("pid = ?", pid).Find(&bindingList); err != nil {
+		return nil, err
+	}
+	return bindingList, nil
+}
