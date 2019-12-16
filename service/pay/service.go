@@ -1,9 +1,10 @@
 package pay
 
 import (
-	"github.com/go-redis/redis/v7"
 	"web_template/conf"
 	"web_template/dao/pay"
+
+	"github.com/go-redis/redis/v7"
 	"xorm.io/xorm"
 )
 

@@ -2,10 +2,10 @@ package school
 
 import (
 	"web_template/conf"
+	schoolDao "web_template/dao/school"
 	"web_template/model/school"
 
 	"github.com/go-redis/redis/v7"
-	schoolDao "web_template/dao/school"
 	"xorm.io/xorm"
 )
 

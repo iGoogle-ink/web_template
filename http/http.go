@@ -3,17 +3,17 @@ package http
 import (
 	"net/http"
 
-	"github.com/go-redis/redis/v7"
 	"web_template/conf"
 	"web_template/ecode"
 	"web_template/model"
 	"web_template/service/auth"
 	"web_template/service/pay"
 	"web_template/service/school"
-	"xorm.io/xorm"
 
+	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"xorm.io/xorm"
 )
 
 var (

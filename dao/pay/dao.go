@@ -3,11 +3,12 @@ package pay
 import (
 	"fmt"
 
+	"web_template/conf"
+
 	"github.com/go-redis/redis/v7"
 	"github.com/iGoogle-ink/gopay/v2/alipay"
 	"github.com/iGoogle-ink/gopay/v2/qq"
 	"github.com/iGoogle-ink/gopay/v2/wechat"
-	"web_template/conf"
 	"xorm.io/xorm"
 )
 

@@ -18,12 +18,14 @@ func TestDao_StudentList(t *testing.T) {
 
 func TestDao_StudentById(t *testing.T) {
 	var (
-		id = 1
+		id = []int{1, 2, 3, 4}
 	)
-	stu, err := d.StudentById(id)
+	stu, err := d.StudentByIds(id)
 	if err != nil {
-		fmt.Println("StudentById err:", err)
+		fmt.Println("StudentByIds err:", err)
 		return
 	}
-	fmt.Println("StudentById:", *stu)
+	for _, s := range stu {
+		fmt.Println("StudentByIds:", s)
+	}
 }

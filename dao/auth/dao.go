@@ -1,8 +1,9 @@
 package auth
 
 import (
-	"github.com/go-redis/redis/v7"
 	"web_template/conf"
+
+	"github.com/go-redis/redis/v7"
 )
 
 type Dao struct {

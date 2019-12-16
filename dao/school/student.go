@@ -22,9 +22,8 @@ func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *school.Student) (id int, er
 	return stu.Id, nil
 }
 
-func (d *Dao) StudentById(id int) (stu *school.Student, err error) {
-	stu = new(school.Student)
-	_, err = d.DB.Table(_TableStudent).Where("id = ?", id).And("is_delete = 0").Get(stu)
+func (d *Dao) StudentByIds(ids []int) (stu []*school.Student, err error) {
+	err = d.DB.Table(_TableStudent).Where("is_delete = 0").In("id", ids).Find(&stu)
 	if err != nil {
 		return nil, err
 	}
