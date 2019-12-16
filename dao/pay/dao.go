@@ -3,8 +3,6 @@ package pay
 import (
 	"web_template/conf"
 
-	"web_template/conf"
-
 	"github.com/go-redis/redis/v7"
 	"github.com/iGoogle-ink/gopay/v2/alipay"
 	"github.com/iGoogle-ink/gopay/v2/qq"
