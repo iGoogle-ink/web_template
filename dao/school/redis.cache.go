@@ -5,12 +5,12 @@ import (
 	"strconv"
 	"time"
 
-	"web_template/model/school"
+	"web_template/model/hs"
 
 	"github.com/go-redis/redis/v7"
 )
 
-func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (tchs []*school.Teacher, err error) {
+func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (tchs []*hs.Teacher, err error) {
 	var results []string
 	err = d.Redis.ZRangeByScore(_RedisKeyTeacher, &redis.ZRangeBy{
 		Min:    strconv.FormatInt(stime.Unix(), 10),
@@ -22,7 +22,7 @@ func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (
 		return nil, err
 	}
 	for _, t := range results {
-		teacher := new(school.Teacher)
+		teacher := new(hs.Teacher)
 		err := json.Unmarshal([]byte(t), teacher)
 		if err != nil {
 			return nil, err
@@ -31,14 +31,14 @@ func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (
 	}
 	return tchs, nil
 }
-func (d *Dao) CacheTeacher(start, end int64) (tchs []*school.Teacher, err error) {
+func (d *Dao) CacheTeacher(start, end int64) (tchs []*hs.Teacher, err error) {
 	var results []string
 	err = d.Redis.ZRange(_RedisKeyTeacher, start, end).ScanSlice(&results)
 	if err != nil {
 		return nil, err
 	}
 	for _, t := range results {
-		teacher := new(school.Teacher)
+		teacher := new(hs.Teacher)
 		err := json.Unmarshal([]byte(t), teacher)
 		if err != nil {
 			return nil, err
@@ -48,7 +48,7 @@ func (d *Dao) CacheTeacher(start, end int64) (tchs []*school.Teacher, err error)
 	return tchs, nil
 }
 
-func (d *Dao) AddCacheTeacher(tchs []*school.Teacher) (err error) {
+func (d *Dao) AddCacheTeacher(tchs []*hs.Teacher) (err error) {
 	var mems []*redis.Z
 	for _, tch := range tchs {
 		marshal, err := json.Marshal(tch)

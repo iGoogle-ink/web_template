@@ -10,5 +10,6 @@ require (
 	github.com/labstack/echo/v4 v4.1.11
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/viper v1.6.1
+	xorm.io/cmd/xorm v0.0.0-20191108140657-006dbf24bb9b // indirect
 	xorm.io/xorm v0.8.0
 )

@@ -1,6 +1,14 @@
-package school
+package hs
 
 import "time"
+
+type HsStudent struct {
+	Id    int       `json:"id" xorm:"autoincr"`
+	Name  string    `json:"name" xorm:"'name'"`
+	Age   int       `json:"age"`
+	Ctime time.Time `json:"ctime" xorm:"'ctime'"`
+	Mtime time.Time `json:"mtime" xorm:"'mtime'"`
+}
 
 type Student struct {
 	Id    int       `json:"id" xorm:"autoincr"`

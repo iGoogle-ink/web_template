@@ -4,13 +4,13 @@ import (
 	"strconv"
 
 	"web_template/ecode"
-	"web_template/model/school"
+	"web_template/model/hs"
 
 	"github.com/labstack/echo/v4"
 )
 
 func studentAdd(c echo.Context) error {
-	req := new(school.StudentAddReq)
+	req := new(hs.StudentAddReq)
 	if err := c.Bind(req); err != nil {
 		return JSON(c, nil, ecode.RequestErr)
 	}

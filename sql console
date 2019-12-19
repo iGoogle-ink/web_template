@@ -163,15 +163,3 @@ CREATE TABLE `bestv_season`
   AUTO_INCREMENT = 15986
   DEFAULT CHARSET = utf8 COMMENT ='百视通season表';
 
-update tv_splash2
-set splash_name    = '测试视频啊',
-    resource_type  = 2,
-    resource_value = 'upos://ssaxcode/0191111at74eed211ed4923efeaa54a6-1-SPLASH.mp4',
-    duration       = 15,
-    skip_duration  = 5,
-    redirect_type  = 3,
-    redirect_value = 33465,
-    mtime = now()
-where id = 9;
-
-show create database bilibili_test;

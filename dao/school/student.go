@@ -1,7 +1,7 @@
 package school
 
 import (
-	"web_template/model/school"
+	"web_template/model/hs"
 
 	"xorm.io/xorm"
 )
@@ -14,7 +14,7 @@ import (
 	`ctime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`mtime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
 */
-func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *school.Student) (id int, err error) {
+func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *hs.Student) (id int, err error) {
 	_, err = tx.Table(_TableStudent).Omit("ctime, mtime").InsertOne(stu)
 	if err != nil {
 		return 0, err
@@ -22,7 +22,7 @@ func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *school.Student) (id int, er
 	return stu.Id, nil
 }
 
-func (d *Dao) StudentByIds(ids []int) (stu []*school.Student, err error) {
+func (d *Dao) StudentByIds(ids []int) (stu []*hs.Student, err error) {
 	err = d.DB.Table(_TableStudent).Where("is_delete = 0").In("id", ids).Find(&stu)
 	if err != nil {
 		return nil, err
@@ -30,7 +30,7 @@ func (d *Dao) StudentByIds(ids []int) (stu []*school.Student, err error) {
 	return stu, nil
 }
 
-func (d *Dao) StudentList() (stus []*school.Student, err error) {
+func (d *Dao) StudentList() (stus []*hs.Student, err error) {
 	err = d.DB.Table(_TableStudent).Where("is_delete = 0").Find(&stus)
 	if err != nil {
 		return nil, err

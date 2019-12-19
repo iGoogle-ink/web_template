@@ -1,4 +1,4 @@
-package school
+package hs
 
 import "time"
 

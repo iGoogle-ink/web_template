@@ -1,7 +1,7 @@
 package school
 
 import (
-	"web_template/model/school"
+	"web_template/model/hs"
 )
 
 /*
@@ -11,7 +11,7 @@ import (
 	`ctime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`mtime`               timestamp        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
 */
-func (d *Dao) TeacherInsert(tch *school.Teacher) (id int, err error) {
+func (d *Dao) TeacherInsert(tch *hs.Teacher) (id int, err error) {
 	_, err = d.DB.Table(_TableTeacher).Omit("ctime, mtime").InsertOne(tch)
 	if err != nil {
 		return 0, err
@@ -19,7 +19,7 @@ func (d *Dao) TeacherInsert(tch *school.Teacher) (id int, err error) {
 	return tch.Id, nil
 }
 
-func (d *Dao) TeacherList() (tchs []*school.Teacher, err error) {
+func (d *Dao) TeacherList() (tchs []*hs.Teacher, err error) {
 	err = d.DB.Table(_TableTeacher).Where("is_delete = 0").Find(&tchs)
 	if err != nil {
 		return nil, err
@@ -27,8 +27,8 @@ func (d *Dao) TeacherList() (tchs []*school.Teacher, err error) {
 	return tchs, nil
 }
 
-func (d *Dao) TeacherById(id int) (tch *school.Teacher, err error) {
-	tch = new(school.Teacher)
+func (d *Dao) TeacherById(id int) (tch *hs.Teacher, err error) {
+	tch = new(hs.Teacher)
 	_, err = d.DB.Table(_TableTeacher).Where("id = ?", id).And("is_delete = 0").Get(tch)
 	if err != nil {
 		return nil, err
@@ -37,7 +37,7 @@ func (d *Dao) TeacherById(id int) (tch *school.Teacher, err error) {
 }
 
 func (d *Dao) TeacherExistById(id int) (has bool, err error) {
-	has, err = d.DB.Table(_TableTeacher).Where("id = ?", id).And("is_delete = 0").Exist(&school.Teacher{})
+	has, err = d.DB.Table(_TableTeacher).Where("id = ?", id).And("is_delete = 0").Exist(&hs.Teacher{})
 	if err != nil {
 		return false, err
 	}

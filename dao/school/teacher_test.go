@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"web_template/model/school"
+	"web_template/model/hs"
 )
 
 func TestDao_TeacherList(t *testing.T) {
@@ -37,7 +37,7 @@ func TestDao_TeacherExistById(t *testing.T) {
 }
 
 func TestDao_TeacherInsert(t *testing.T) {
-	tch := &school.Teacher{
+	tch := &hs.Teacher{
 		Name:    "UT测试",
 		Subject: "UT测试学科",
 	}

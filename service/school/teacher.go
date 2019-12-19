@@ -5,10 +5,10 @@ import (
 	"log"
 
 	"web_template/ecode"
-	"web_template/model/school"
+	"web_template/model/hs"
 )
 
-func (s *Service) TeacherAdd(req *school.TeacherAddReq) (err error) {
+func (s *Service) TeacherAdd(req *hs.TeacherAddReq) (err error) {
 	tch := req.FormatToTeacher()
 	_, err = s.dao.TeacherInsert(tch)
 	if err != nil {
@@ -18,8 +18,8 @@ func (s *Service) TeacherAdd(req *school.TeacherAddReq) (err error) {
 	return err
 }
 
-func (s *Service) TeacherList(start, end int64) (rsp *school.TeacherListRsp, err error) {
-	var tchs []*school.Teacher
+func (s *Service) TeacherList(start, end int64) (rsp *hs.TeacherListRsp, err error) {
+	var tchs []*hs.Teacher
 	tchs, err = s.dao.CacheTeacher(start, end)
 	if err != nil {
 		return nil, err
@@ -39,9 +39,9 @@ func (s *Service) TeacherList(start, end int64) (rsp *school.TeacherListRsp, err
 			log.Println("缓存添加失败")
 		}
 	}
-	rsp = new(school.TeacherListRsp)
+	rsp = new(hs.TeacherListRsp)
 	for _, v := range tchs {
-		t := new(school.TeacherRsp)
+		t := new(hs.TeacherRsp)
 		v.FormatToRsp(t)
 		rsp.TeacherList = append(rsp.TeacherList, t)
 	}

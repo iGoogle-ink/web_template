@@ -38,6 +38,7 @@ func (d *Dao) Transact(transactHandler func(tx *xorm.Session) error) (err error)
 	}
 
 	defer func() {
+		defer session.Close()
 		if p := recover(); p != nil {
 			_ = session.Rollback()
 			log.Println("Panic In Transact:", p)

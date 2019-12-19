@@ -6,7 +6,7 @@ import (
 
 	"web_template/ecode"
 	"web_template/model"
-	"web_template/model/school"
+	"web_template/model/hs"
 
 	"github.com/pkg/errors"
 	"xorm.io/xorm"
@@ -32,7 +32,7 @@ func (s *Service) loadStudentProc() {
 	}
 }
 
-func (s *Service) StudentAdd(req *school.StudentAddReq) (err error) {
+func (s *Service) StudentAdd(req *hs.StudentAddReq) (err error) {
 	has, err := s.dao.TeacherExistById(req.TeacherId)
 	if err != nil {
 		return err
@@ -61,28 +61,28 @@ func (s *Service) StudentAdd(req *school.StudentAddReq) (err error) {
 	return nil
 }
 
-func (s *Service) StudentList() (rsp *school.StudentListRsp, err error) {
+func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
 	if s.studentList == nil {
 		s.loadStudent()
 	}
 	if len(s.studentList) == 0 {
 		return nil, ecode.NothingFound
 	}
-	rsp = new(school.StudentListRsp)
+	rsp = new(hs.StudentListRsp)
 	for _, v := range s.studentList {
-		sRsp := new(school.StudentRsp)
+		sRsp := new(hs.StudentRsp)
 		v.FormatToRsp(sRsp)
 		rsp.StudentList = append(rsp.StudentList, sRsp)
 	}
 	return rsp, nil
 }
 
-func (s *Service) StudentById(id int) (rsp *school.StudentRsp, err error) {
+func (s *Service) StudentById(id int) (rsp *hs.StudentRsp, err error) {
 	if len(s.studentMap) == 0 {
 		s.loadStudent()
 	}
 	if v, ok := s.studentMap[id]; ok {
-		rsp = new(school.StudentRsp)
+		rsp = new(hs.StudentRsp)
 		v.FormatToRsp(rsp)
 		return rsp, nil
 	}
