@@ -17,5 +17,5 @@
 
 ```bash
 xorm reverse mysql dbUserName:password@tcp(hostname:3306)/databaseName?charset=utf8 pkg/dbmodel/goxorm pkg/dbmodel
-xorm reverse mysql jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_comic?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4 pkg/dbmodel/goxorm pkg/dbmodel
+xorm reverse mysql jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_comic?charset=utf8,utf8mb4 pkg/dbmodel/goxorm pkg/dbmodel
 ```
