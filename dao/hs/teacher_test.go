@@ -1,10 +1,10 @@
-package school
+package hs
 
 import (
 	"fmt"
 	"testing"
 
-	"web_template/model/hs"
+	"web_template/pkg/dbmodel"
 )
 
 func TestDao_TeacherList(t *testing.T) {
@@ -37,7 +37,7 @@ func TestDao_TeacherExistById(t *testing.T) {
 }
 
 func TestDao_TeacherInsert(t *testing.T) {
-	tch := &hs.Teacher{
+	tch := &dbmodel.HsTeacher{
 		Name:    "UT测试",
 		Subject: "UT测试学科",
 	}

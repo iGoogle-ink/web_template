@@ -1,4 +1,4 @@
-package school
+package hs
 
 import (
 	"fmt"
@@ -47,4 +47,12 @@ func (s *Service) TeacherList(start, end int64) (rsp *hs.TeacherListRsp, err err
 	}
 	// todo something
 	return rsp, nil
+}
+
+func (s *Service) TeacherById(id int) (*hs.Teacher, error) {
+	tch, err := s.dao.TeacherById(id)
+	if err != nil {
+		return nil, err
+	}
+	return tch, nil
 }

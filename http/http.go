@@ -7,8 +7,8 @@ import (
 	"web_template/ecode"
 	"web_template/model"
 	"web_template/service/auth"
+	"web_template/service/hs"
 	"web_template/service/pay"
-	"web_template/service/school"
 
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo/v4"
@@ -17,14 +17,14 @@ import (
 )
 
 var (
-	schoolSrv *school.Service
+	schoolSrv *hs.Service
 	authSrv   *auth.Service
 	paySrv    *pay.Service
 	config    *conf.Config
 )
 
 type Server struct {
-	SchoolSrv *school.Service
+	SchoolSrv *hs.Service
 	AuthSrv   *auth.Service
 	PaySrv    *pay.Service
 	// some other Service
@@ -44,7 +44,7 @@ func Init(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
 
 func initService(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
 	config = c
-	schoolSrv = school.New(c, db, rds)
+	schoolSrv = hs.New(c, db, rds)
 	authSrv = auth.New(c, rds)
 	paySrv = pay.New(c, db, rds)
 }

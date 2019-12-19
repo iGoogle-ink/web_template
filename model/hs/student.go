@@ -1,47 +1,53 @@
 package hs
 
-import "time"
+import (
+	"time"
 
-type HsStudent struct {
-	Id    int       `json:"id" xorm:"autoincr"`
-	Name  string    `json:"name" xorm:"'name'"`
-	Age   int       `json:"age"`
-	Ctime time.Time `json:"ctime" xorm:"'ctime'"`
-	Mtime time.Time `json:"mtime" xorm:"'mtime'"`
-}
+	"web_template/pkg/dbmodel"
+)
 
 type Student struct {
-	Id    int       `json:"id" xorm:"autoincr"`
-	Name  string    `json:"name" xorm:"'name'"`
-	Ctime time.Time `json:"ctime" xorm:"'ctime'"`
-	Mtime time.Time `json:"mtime" xorm:"'mtime'"`
+	Id     int       `json:"id"`
+	Name   string    `json:"name"`
+	Age    int       `json:"age"`
+	Gender int       `json:"gender"`
+	Ctime  time.Time `json:"ctime"`
+	Mtime  time.Time `json:"mtime"`
 }
 
 type StudentAddReq struct {
 	Name      string `json:"name"`
+	Age       int    `json:"age"`
+	Gender    int    `json:"gender"`
 	TeacherId int    `json:"teacher_id"`
 }
 
 type StudentListRsp struct {
-	StudentList []*StudentRsp `json:"student_list"`
+	StudentList []*StudentRsp `json:"list"`
 }
 
 type StudentRsp struct {
-	Id    int    `json:"id"`
-	Name  string `json:"name"`
-	Ctime int64  `json:"ctime"`
-	Mtime int64  `json:"mtime"`
+	Id     int    `json:"id"`
+	Name   string `json:"name"`
+	Age    int    `json:"age"`
+	Gender int    `json:"gender"`
+	Ctime  int64  `json:"ctime"`
+	Mtime  int64  `json:"mtime"`
 }
 
 func (s *Student) FormatToRsp(sRsp *StudentRsp) {
 	sRsp.Id = s.Id
 	sRsp.Name = s.Name
+	sRsp.Age = s.Age
+	sRsp.Gender = s.Gender
 	sRsp.Ctime = s.Ctime.Unix()
 	sRsp.Mtime = s.Mtime.Unix()
 }
 
-func (s *StudentAddReq) FormatToStudent() (stu *Student) {
-	return &Student{
-		Name: s.Name,
+func (s *StudentAddReq) FormatToStudent() (stu *dbmodel.HsStudent) {
+	return &dbmodel.HsStudent{
+		Name:   s.Name,
+		Age:    s.Age,
+		Gender: s.Gender,
 	}
 }

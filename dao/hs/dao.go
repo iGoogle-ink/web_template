@@ -1,4 +1,4 @@
-package school
+package hs
 
 import (
 	"log"
@@ -11,9 +11,9 @@ import (
 )
 
 const (
-	_TableBinding = "binding"
-	_TableStudent = "student"
-	_TableTeacher = "teacher"
+	_TableBinding   = "binding"
+	_TableHsStudent = "hs_student"
+	_TableHsTeacher = "hs_teacher"
 )
 
 type Dao struct {

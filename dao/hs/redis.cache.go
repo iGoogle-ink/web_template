@@ -1,13 +1,12 @@
-package school
+package hs
 
 import (
 	"encoding/json"
 	"strconv"
 	"time"
 
-	"web_template/model/hs"
-
 	"github.com/go-redis/redis/v7"
+	"web_template/model/hs"
 )
 
 func (d *Dao) CacheTeacherByScore(stime, etime time.Time, offset, count int64) (tchs []*hs.Teacher, err error) {

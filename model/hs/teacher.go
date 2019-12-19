@@ -1,27 +1,37 @@
 package hs
 
-import "time"
+import (
+	"time"
+
+	"web_template/pkg/dbmodel"
+)
 
 type Teacher struct {
-	Id      int       `json:"id" xorm:"autoincr"`
-	Name    string    `json:"name" xorm:"'name'"`
-	Subject string    `json:"subject" xorm:"'subject'"`
-	Ctime   time.Time `json:"ctime" xorm:"'ctime'"`
-	Mtime   time.Time `json:"mtime" xorm:"'mtime'"`
+	Id      int       `json:"id"`
+	Name    string    `json:"name"`
+	Age     int       `json:"age"`
+	Gender  int       `json:"gender"`
+	Subject string    `json:"subject"`
+	Ctime   time.Time `json:"ctime"`
+	Mtime   time.Time `json:"mtime"`
 }
 
 type TeacherAddReq struct {
 	Name    string `json:"name"`
+	Age     int    `json:"age"`
+	Gender  int    `json:"gender"`
 	Subject string `json:"subject"`
 }
 
 type TeacherListRsp struct {
-	TeacherList []*TeacherRsp `json:"teacher_list"`
+	TeacherList []*TeacherRsp `json:"list"`
 }
 
 type TeacherRsp struct {
 	Id      int    `json:"id"`
 	Name    string `json:"name"`
+	Age     int    `json:"age"`
+	Gender  int    `json:"gender"`
 	Subject string `json:"subject"`
 	Ctime   int64  `json:"ctime"`
 	Mtime   int64  `json:"mtime"`
@@ -30,14 +40,18 @@ type TeacherRsp struct {
 func (s *Teacher) FormatToRsp(tRsp *TeacherRsp) {
 	tRsp.Id = s.Id
 	tRsp.Name = s.Name
+	tRsp.Age = s.Age
+	tRsp.Gender = s.Gender
 	tRsp.Subject = s.Subject
 	tRsp.Ctime = s.Ctime.Unix()
 	tRsp.Mtime = s.Mtime.Unix()
 }
 
-func (t *TeacherAddReq) FormatToTeacher() (tch *Teacher) {
-	return &Teacher{
+func (t *TeacherAddReq) FormatToTeacher() (tch *dbmodel.HsTeacher) {
+	return &dbmodel.HsTeacher{
 		Name:    t.Name,
+		Age:     t.Age,
+		Gender:  t.Gender,
 		Subject: t.Subject,
 	}
 }

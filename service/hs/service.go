@@ -1,8 +1,8 @@
-package school
+package hs
 
 import (
 	"web_template/conf"
-	schoolDao "web_template/dao/school"
+	schoolDao "web_template/dao/hs"
 	"web_template/model/hs"
 
 	"github.com/go-redis/redis/v7"

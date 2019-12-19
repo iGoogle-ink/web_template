@@ -1,13 +1,14 @@
-package school
+package hs
 
 import (
 	"web_template/model"
+	"web_template/pkg/dbmodel"
 
 	"xorm.io/xorm"
 )
 
 func (d *Dao) TxAddBinding(tx *xorm.Session, bindType, pid, cid int) (err error) {
-	binding := &model.Binding{
+	binding := &dbmodel.Binding{
 		BindType: bindType,
 		Pid:      pid,
 		Cid:      cid,
