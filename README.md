@@ -22,24 +22,24 @@ xorm reverse mysql jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_comic
 
 ### 接口地址
 
-Ping：GET
+**Ping：GET**
 - http://www.igoogle.ink/ping
 
-获取学生信息列表：GET
+**获取学生信息列表：GET**
 - http://www.igoogle.ink/student/list
 
-获取学生信息ByID：GET
+**获取学生信息ByID：GET**
 - 参数：id，
 - http://www.igoogle.ink/student/id?id=1
 
-获取教师信息列表：GET
+**获取教师信息列表：GET**
 - http://www.igoogle.ink/teacher/list
 
-获取教师信息ByID：GET
+**获取教师信息ByID：GET**
 - 参数：id，
 - http://www.igoogle.ink/teacher/id?id=1
 
-添加学生信息：POST
+**添加学生信息：POST**
 - 请求体：JSON
 ```bash
 {
@@ -49,7 +49,7 @@ Ping：GET
 ```
 - http://www.igoogle.ink/student/add
 
-添加教师信息：POST
+**添加教师信息：POST**
 - 请求体：JSON
 - http://www.igoogle.ink/teacher/add
 ```bash
