@@ -3,7 +3,6 @@ package hs
 import (
 	"fmt"
 	"testing"
-	"time"
 )
 
 func TestDao_AddCacheTeacher(t *testing.T) {
@@ -13,33 +12,27 @@ func TestDao_AddCacheTeacher(t *testing.T) {
 		return
 	}
 	fmt.Println("tchs:", tchs)
-	err = d.AddCacheTeacher(tchs)
+	err = d.AddCacheTeachers(tchs)
 	if err != nil {
 		fmt.Println("err2:", err)
 		return
 	}
 }
 
-func TestDao_CacheTeacherByScore(t *testing.T) {
-	stime, _ := time.ParseInLocation("2006-01-02 15:04:05", "2019-11-28 19:00:14", time.Local)
-	etime, _ := time.ParseInLocation("2006-01-02 15:04:05", "2019-12-02 17:35:52", time.Local)
-
-	teacher, err := d.CacheTeacherByScore(stime, etime, 0, 0)
+func TestDao_CacheTeacherIds(t *testing.T) {
+	ids, err := d.CacheTeacherIds()
 	if err != nil {
 		fmt.Println("err:", err)
 		return
 	}
-	for _, v := range teacher {
-		fmt.Println("v:", v)
-	}
+	fmt.Println("ids:", ids)
 }
-func TestDao_CacheTeacher(t *testing.T) {
-	teacher, err := d.CacheTeacher(0, 100)
+
+func TestDao_CacheTeacherById(t *testing.T) {
+	tch, err := d.CacheTeacherById(1)
 	if err != nil {
 		fmt.Println("err:", err)
 		return
 	}
-	for _, v := range teacher {
-		fmt.Println("v:", v)
-	}
+	fmt.Println(tch)
 }

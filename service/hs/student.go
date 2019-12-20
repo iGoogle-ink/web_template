@@ -12,23 +12,24 @@ import (
 	"xorm.io/xorm"
 )
 
-func (s *Service) loadStudent() {
+func (s *Service) loadStudents() error {
 	stus, err := s.dao.StudentList()
 	if err != nil {
 		log.Println("Load Students Error :", err)
-		return
+		return err
 	}
 	s.studentList = stus
 	for _, v := range stus {
 		s.studentMap[v.Id] = v
 	}
+	return nil
 }
 
-func (s *Service) loadStudentProc() {
+func (s *Service) loadStudentsProc() {
 	for {
 		time.Sleep(time.Duration(s.c.ReloadTime) * time.Second)
-		log.Println("Reload Student Data")
-		s.loadStudent()
+		log.Println("Reload Students Data")
+		s.loadStudents()
 	}
 }
 
@@ -63,7 +64,9 @@ func (s *Service) StudentAdd(req *hs.StudentAddReq) (err error) {
 
 func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
 	if s.studentList == nil {
-		s.loadStudent()
+		if err = s.loadStudents(); err != nil {
+			return nil, err
+		}
 	}
 	if len(s.studentList) == 0 {
 		return nil, ecode.NothingFound
@@ -79,7 +82,9 @@ func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
 
 func (s *Service) StudentById(id int) (rsp *hs.StudentRsp, err error) {
 	if len(s.studentMap) == 0 {
-		s.loadStudent()
+		if err = s.loadStudents(); err != nil {
+			return nil, err
+		}
 	}
 	if v, ok := s.studentMap[id]; ok {
 		rsp = new(hs.StudentRsp)

@@ -1,9 +1,12 @@
 package hs
 
 import (
+	"context"
+
 	"web_template/conf"
 	schoolDao "web_template/dao/hs"
 	"web_template/model/hs"
+	"web_template/pkg/errgroup"
 
 	"github.com/go-redis/redis/v7"
 	"xorm.io/xorm"
@@ -26,7 +29,29 @@ func New(c *conf.Config, db *xorm.Engine, rds *redis.Client) (s *Service) {
 	}
 
 	// some data need init when service new
-	s.loadStudent()
-	go s.loadStudentProc()
+	s.initData()
+	go s.loadStudentsProc()
+	go s.loadTeachersProc()
 	return s
+}
+
+func (s *Service) initData() {
+	eg := errgroup.WithContext(context.Background())
+	// goroutine load students
+	eg.Go(func(ctx context.Context) error {
+		if err := s.loadStudents(); err != nil {
+			return err
+		}
+		return nil
+	})
+	// goroutine load teachers
+	eg.Go(func(ctx context.Context) error {
+		if err := s.loadTeachers(); err != nil {
+			return err
+		}
+		return nil
+	})
+	if err := eg.Wait(); err != nil {
+		panic(err)
+	}
 }

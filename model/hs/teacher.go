@@ -37,14 +37,14 @@ type TeacherRsp struct {
 	Mtime   int64  `json:"mtime"`
 }
 
-func (s *Teacher) FormatToRsp(tRsp *TeacherRsp) {
-	tRsp.Id = s.Id
-	tRsp.Name = s.Name
-	tRsp.Age = s.Age
-	tRsp.Gender = s.Gender
-	tRsp.Subject = s.Subject
-	tRsp.Ctime = s.Ctime.Unix()
-	tRsp.Mtime = s.Mtime.Unix()
+func (t *Teacher) FormatToRsp(tRsp *TeacherRsp) {
+	tRsp.Id = t.Id
+	tRsp.Name = t.Name
+	tRsp.Age = t.Age
+	tRsp.Gender = t.Gender
+	tRsp.Subject = t.Subject
+	tRsp.Ctime = t.Ctime.Unix()
+	tRsp.Mtime = t.Mtime.Unix()
 }
 
 func (t *TeacherAddReq) FormatToTeacher() (tch *dbmodel.HsTeacher) {
@@ -54,4 +54,16 @@ func (t *TeacherAddReq) FormatToTeacher() (tch *dbmodel.HsTeacher) {
 		Gender:  t.Gender,
 		Subject: t.Subject,
 	}
+}
+
+func (t *Teacher) FormatToMap() map[string]interface{} {
+	mp := make(map[string]interface{})
+	mp["id"] = t.Id
+	mp["name"] = t.Name
+	mp["age"] = t.Age
+	mp["gender"] = t.Gender
+	mp["subject"] = t.Subject
+	mp["ctime"] = t.Ctime.Unix()
+	mp["mtime"] = t.Mtime.Unix()
+	return mp
 }

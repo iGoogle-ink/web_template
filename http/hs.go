@@ -1,3 +1,6 @@
+/*
+	high school
+*/
 package http
 
 import (
@@ -44,17 +47,7 @@ func teacherAdd(c echo.Context) error {
 }
 
 func teacherList(c echo.Context) error {
-	start := c.QueryParam("start")
-	end := c.QueryParam("end")
-	startInt64, err := strconv.ParseInt(start, 10, 64)
-	if err != nil {
-		return JSON(c, nil, ecode.RequestErr)
-	}
-	endInt64, err := strconv.ParseInt(end, 10, 64)
-	if err != nil {
-		return JSON(c, nil, ecode.RequestErr)
-	}
-	rsp, err := schoolSrv.TeacherList(startInt64, endInt64)
+	rsp, err := schoolSrv.TeacherList()
 	return JSON(c, rsp, err)
 }
 
