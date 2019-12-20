@@ -37,7 +37,8 @@ type TeacherRsp struct {
 	Mtime   int64  `json:"mtime"`
 }
 
-func (t *Teacher) FormatToRsp(tRsp *TeacherRsp) {
+func (t *Teacher) FormatToRsp() (tRsp *TeacherRsp) {
+	tRsp = new(TeacherRsp)
 	tRsp.Id = t.Id
 	tRsp.Name = t.Name
 	tRsp.Age = t.Age
@@ -45,6 +46,7 @@ func (t *Teacher) FormatToRsp(tRsp *TeacherRsp) {
 	tRsp.Subject = t.Subject
 	tRsp.Ctime = t.Ctime.Unix()
 	tRsp.Mtime = t.Mtime.Unix()
+	return tRsp
 }
 
 func (t *TeacherAddReq) FormatToTeacher() (tch *dbmodel.HsTeacher) {

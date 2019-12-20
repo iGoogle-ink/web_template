@@ -28,11 +28,11 @@ func studentList(c echo.Context) error {
 func studentById(c echo.Context) error {
 	pId := c.QueryParam("id")
 	if pId == "" {
-		return ecode.RequestErr
+		return JSON(c, nil, ecode.RequestErr)
 	}
 	id, err := strconv.Atoi(pId)
 	if err != nil {
-		return ecode.RequestErr
+		return JSON(c, nil, ecode.RequestErr)
 	}
 	rsp, err := schoolSrv.StudentById(id)
 	return JSON(c, rsp, err)
@@ -54,11 +54,11 @@ func teacherList(c echo.Context) error {
 func teacherById(c echo.Context) error {
 	pId := c.QueryParam("id")
 	if pId == "" {
-		return ecode.RequestErr
+		return JSON(c, nil, ecode.RequestErr)
 	}
 	id, err := strconv.Atoi(pId)
 	if err != nil {
-		return ecode.RequestErr
+		return JSON(c, nil, ecode.RequestErr)
 	}
 	rsp, err := schoolSrv.TeacherById(id)
 	return JSON(c, rsp, err)
