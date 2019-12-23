@@ -3,7 +3,7 @@
     "ProjectName": "web_template",
     "Redis": {
       "Addr": [
-        "127.0.0.1:7001"
+        "172.19.146.41:7001"
       ],
       "Password": ""
     },
