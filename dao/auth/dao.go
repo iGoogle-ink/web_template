@@ -8,10 +8,10 @@ import (
 
 type Dao struct {
 	c     *conf.Config
-	Redis *redis.Client
+	Redis *redis.ClusterClient
 }
 
-func New(c *conf.Config, rds *redis.Client) (d *Dao) {
+func New(c *conf.Config, rds *redis.ClusterClient) (d *Dao) {
 	d = &Dao{
 		c:     c,
 		Redis: rds,

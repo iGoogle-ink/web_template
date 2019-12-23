@@ -30,7 +30,7 @@ type Server struct {
 	// some other Service
 }
 
-func Init(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
+func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient) {
 	initService(c, db, rds)
 	e := echo.New()
 	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -42,7 +42,7 @@ func Init(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
 	}
 }
 
-func initService(c *conf.Config, db *xorm.Engine, rds *redis.Client) {
+func initService(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient) {
 	config = c
 	schoolSrv = hs.New(c, db, rds)
 	authSrv = auth.New(c, rds)

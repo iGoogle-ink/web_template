@@ -67,15 +67,24 @@ func (s *Service) TeacherList() (rsp *hs.TeacherListRsp, err error) {
 			ids = append(ids, int64(tch.Id))
 		}
 		s.dao.AddCacheTeacherIds(ids)
+		rsp = new(hs.TeacherListRsp)
+		for _, v := range tchs {
+			tRsp := v.FormatToRsp()
+			rsp.TeacherList = append(rsp.TeacherList, tRsp)
+		}
+		return rsp, nil
 	}
+
 	// 根据id 获取teacher信息
 	tchs, err := s.dao.CacheTeachers(ids)
+	if err != nil {
+		return nil, err
+	}
 	rsp = new(hs.TeacherListRsp)
 	for _, v := range tchs {
 		tRsp := v.FormatToRsp()
 		rsp.TeacherList = append(rsp.TeacherList, tRsp)
 	}
-	// todo something
 	return rsp, nil
 }
 

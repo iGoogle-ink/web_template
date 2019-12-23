@@ -34,8 +34,7 @@ type DB struct {
 }
 
 type Redis struct {
-	Addr     string
-	Db       int
+	Addr     []string
 	Password string
 }
 

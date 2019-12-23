@@ -12,7 +12,7 @@ type Service struct {
 	dao *auth.Dao
 }
 
-func New(c *conf.Config, rds *redis.Client) (s *Service) {
+func New(c *conf.Config, rds *redis.ClusterClient) (s *Service) {
 	s = &Service{
 		c:   c,
 		dao: auth.New(c, rds),

@@ -19,10 +19,10 @@ const (
 type Dao struct {
 	c     *conf.Config
 	DB    *xorm.Engine
-	Redis *redis.Client
+	Redis *redis.ClusterClient
 }
 
-func New(c *conf.Config, db *xorm.Engine, rds *redis.Client) (d *Dao) {
+func New(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient) (d *Dao) {
 	d = &Dao{
 		c:     c,
 		DB:    db,

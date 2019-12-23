@@ -21,11 +21,10 @@ func InitDB(c *conf.DB) (db *xorm.Engine) {
 	return db
 }
 
-func InitRedis(c *conf.Redis) (r *redis.Client) {
-	r = redis.NewClient(&redis.Options{
-		Addr:     c.Addr,
+func InitRedis(c *conf.Redis) (r *redis.ClusterClient) {
+	r = redis.NewClusterClient(&redis.ClusterOptions{
+		Addrs:    c.Addr,
 		Password: c.Password,
-		DB:       c.Db,
 	})
 	_, err := r.Ping().Result()
 	if err != nil {

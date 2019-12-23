@@ -13,7 +13,7 @@ type Service struct {
 	dao *pay.Dao
 }
 
-func New(c *conf.Config, db *xorm.Engine, rds *redis.Client) (s *Service) {
+func New(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient) (s *Service) {
 	s = &Service{
 		c:   c,
 		dao: pay.New(c, db, rds),

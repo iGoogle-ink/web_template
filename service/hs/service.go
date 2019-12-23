@@ -21,7 +21,7 @@ type Service struct {
 	studentMap  map[int]*hs.Student // key:id,value:name
 }
 
-func New(c *conf.Config, db *xorm.Engine, rds *redis.Client) (s *Service) {
+func New(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient) (s *Service) {
 	s = &Service{
 		c:          c,
 		dao:        schoolDao.New(c, db, rds),
