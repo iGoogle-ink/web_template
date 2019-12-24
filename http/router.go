@@ -16,6 +16,10 @@ func router(e *echo.Echo) {
 		tch.GET("/list", teacherList)
 		tch.GET("/id", teacherById)
 	}
+	pay := e.Group("/pay")
+	{
+		pay.POST("/send", paySend)
+	}
 }
 
 func ping(c echo.Context) error {

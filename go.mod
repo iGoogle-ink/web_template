@@ -9,6 +9,7 @@ require (
 	github.com/iGoogle-ink/gopay/v2 v2.0.1
 	github.com/labstack/echo/v4 v4.1.11
 	github.com/lib/pq v1.1.1 // indirect
+	github.com/nsqio/go-nsq v1.0.7
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/viper v1.6.1
 	xorm.io/xorm v0.8.0

@@ -13,6 +13,12 @@
       "ShowSQL": false,
       "Idle": 20
     },
+    "NSQ": {
+      "ConsumerAddr": "172.19.146.41:4161",
+      "ProducerAddr": "172.19.146.41:4150",
+      "Topic": "topic",
+      "Channel": "channel"
+    },
     "HttpServer": {
       "Port": ":2233"
     },
@@ -60,6 +66,12 @@
       "Dsn": "jerry:IloveJerry2019!@tcp(101.132.174.14:3306)/bilibili_comic?timeout=2s&readTimeout=5s&writeTimeout=5s&parseTime=true&loc=Local&charset=utf8,utf8mb4",
       "ShowSQL": false,
       "Idle": 20
+    },
+    "NSQ": {
+      "ConsumerAddr": "101.132.174.14:4161",
+      "ProducerAddr": "101.132.174.14:4150",
+      "Topic": "test_topic",
+      "Channel": "test_channel"
     },
     "HttpServer": {
       "Port": ":2233"

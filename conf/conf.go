@@ -17,6 +17,7 @@ type Config struct {
 	ProjectName string
 	DB          *DB
 	Redis       *Redis
+	NSQ         *NSQ
 	HttpServer  *HttpServer
 	WeChatPay   *WeChatPay
 	AliPay      *AliPay
@@ -36,6 +37,13 @@ type DB struct {
 type Redis struct {
 	Addr     []string
 	Password string
+}
+
+type NSQ struct {
+	ConsumerAddr string
+	ProducerAddr string
+	Topic        string
+	Channel      string
 }
 
 type HttpServer struct {
