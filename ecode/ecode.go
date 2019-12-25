@@ -2,10 +2,11 @@ package ecode
 
 import (
 	"strconv"
+	"sync"
 )
 
 var (
-	errorMap     = make(map[int]string)
+	errorMap     = new(sync.Map)
 	OK           = add(0, "SUCCESS")
 	CookieErr    = add(302, "Cookie 失效")
 	RequestErr   = add(400, "请求错误")
@@ -28,7 +29,7 @@ type Codes interface {
 }
 
 func add(code int, msg string) Error {
-	errorMap[code] = msg
+	errorMap.Store(code, msg)
 	return Error(code)
 }
 
@@ -42,8 +43,8 @@ func (e Error) Code() int { return int(e) }
 
 // Message return error message
 func (e Error) Message() string {
-	if msg, ok := errorMap[e.Code()]; ok {
-		return msg
+	if msg, ok := errorMap.Load(e.Code()); ok {
+		return msg.(string)
 	}
 	return e.Error()
 }
