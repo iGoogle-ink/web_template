@@ -54,7 +54,7 @@ func (s *Service) TeacherList() (rsp *hs.TeacherListRsp, err error) {
 	// 获取 Teacher id
 	ids, err := s.dao.CacheTeacherIds()
 	if err != nil || len(ids) == 0 {
-		fmt.Println("数据回源")
+		log.Println("数据回源，Error：", err)
 		tchs, err := s.dao.TeacherList()
 		if err != nil {
 			log.Println("s.dao.TeacherList:", err)
