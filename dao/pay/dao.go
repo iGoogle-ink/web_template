@@ -4,9 +4,9 @@ import (
 	"web_template/conf"
 
 	"github.com/go-redis/redis/v7"
-	"github.com/iGoogle-ink/gopay/v2/alipay"
-	"github.com/iGoogle-ink/gopay/v2/qq"
-	"github.com/iGoogle-ink/gopay/v2/wechat"
+	"github.com/iGoogle-ink/gopay/alipay"
+	"github.com/iGoogle-ink/gopay/qq"
+	"github.com/iGoogle-ink/gopay/wechat"
 	"xorm.io/xorm"
 )
 

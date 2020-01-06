@@ -13,16 +13,15 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/nsqio/go-nsq"
 	"xorm.io/xorm"
 )
 
 var (
-	schoolSrv   *hs.Service
-	authSrv     *auth.Service
-	nsqProducer *nsq.Producer
-	paySrv      *pay.Service
-	config      *conf.Config
+	schoolSrv *hs.Service
+	authSrv   *auth.Service
+	//nsqProducer *nsq.Producer
+	paySrv *pay.Service
+	config *conf.Config
 )
 
 type Server struct {
@@ -32,8 +31,8 @@ type Server struct {
 	// some other Service
 }
 
-func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient, producer *nsq.Producer) {
-	initService(c, db, rds, producer)
+func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient /*, producer *nsq.Producer*/) {
+	initService(c, db, rds /*, producer*/)
 	e := echo.New()
 	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
@@ -45,12 +44,12 @@ func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient, producer *n
 	}
 }
 
-func initService(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient, producer *nsq.Producer) {
+func initService(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient /*, producer *nsq.Producer*/) {
 	config = c
-	nsqProducer = producer
+	//nsqProducer = producer
 	schoolSrv = hs.New(c, db, rds)
 	authSrv = auth.New(c, rds)
-	paySrv = pay.New(c, db, rds, producer)
+	//paySrv = pay.New(c, db, rds, producer)
 }
 
 func keyAuth() echo.MiddlewareFunc {
