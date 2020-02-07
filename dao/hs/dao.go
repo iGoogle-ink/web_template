@@ -50,7 +50,7 @@ func (d *Dao) Transact(transactHandler func(tx *xorm.Session) error) (err error)
 		}
 		err = session.Commit()
 	}()
-
+	// 此处返回的error为外部返回的error
 	err = transactHandler(session)
 	return err
 }

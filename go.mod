@@ -12,5 +12,5 @@ require (
 	github.com/nsqio/go-nsq v1.0.7
 	github.com/pkg/errors v0.8.1
 	github.com/spf13/viper v1.6.1
-	xorm.io/xorm v0.8.0
+	xorm.io/xorm v0.8.1
 )
