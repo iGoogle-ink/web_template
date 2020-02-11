@@ -1,6 +1,8 @@
 package http
 
-import "github.com/labstack/echo/v4"
+import (
+	"github.com/labstack/echo/v4"
+)
 
 func router(e *echo.Echo) {
 	e.GET("/ping", ping)

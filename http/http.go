@@ -6,6 +6,7 @@ import (
 	"web_template/conf"
 	"web_template/ecode"
 	"web_template/model"
+	"web_template/pkg"
 	"web_template/service/auth"
 	"web_template/service/hs"
 	"web_template/service/pay"
@@ -34,6 +35,7 @@ type Server struct {
 func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient /*, producer *nsq.Producer*/) {
 	initService(c, db, rds /*, producer*/)
 	e := echo.New()
+	e.Use(pkg.Recover())
 	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
 	}))

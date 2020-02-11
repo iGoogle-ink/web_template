@@ -38,8 +38,3 @@ func (d *Dao) StudentList() (stus []*hs.Student, err error) {
 	}
 	return stus, nil
 }
-
-func (d *Dao) UpdateStudent() (err error) {
-	d.DB.Update()
-	return nil
-}
