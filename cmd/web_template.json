@@ -1,6 +1,13 @@
 {
   "prod": {
     "ProjectName": "web_template",
+    "Hystrix": {
+      "Timeout": 2000,
+      "MaxConcurrentRequests": 1000,
+      "RequestVolumeThreshold": 20,
+      "SleepWindow": 3000,
+      "ErrorPercentThreshold": 50
+    },
     "Redis": {
       "Addr": [
         "172.19.146.41:7001"
@@ -55,6 +62,13 @@
   },
   "test": {
     "ProjectName": "web_template",
+    "Hystrix": {
+      "Timeout": 2000,
+      "MaxConcurrentRequests": 1000,
+      "RequestVolumeThreshold": 20,
+      "SleepWindow": 3000,
+      "ErrorPercentThreshold": 50
+    },
     "Redis": {
       "Addr": [
         "101.132.174.14:7001"

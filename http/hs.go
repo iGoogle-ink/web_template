@@ -4,8 +4,10 @@
 package http
 
 import (
+	"fmt"
 	"strconv"
 
+	"github.com/afex/hystrix-go/hystrix"
 	"web_template/ecode"
 	"web_template/model/hs"
 
@@ -21,8 +23,19 @@ func studentAdd(c echo.Context) error {
 }
 
 func studentList(c echo.Context) error {
-	rsp, err := schoolSrv.StudentList()
-	return JSON(c, rsp, err)
+	//hystrix.Do(config.ProjectName, func() error {
+	//	rsp, err := schoolSrv.StudentList()
+	//	return JSON(c, rsp, err)
+	//}, nil)
+	hystrix.Do(config.ProjectName, func() error {
+		rsp, err := schoolSrv.StudentList()
+		return JSON(c, rsp, err)
+	}, func(e error) error {
+		fmt.Println("studentList 熔断机制触发:", e)
+		JSON(c, nil, ecode.ServerBusy)
+		return e
+	})
+	return nil
 }
 
 func studentById(c echo.Context) error {
@@ -34,8 +47,22 @@ func studentById(c echo.Context) error {
 	if err != nil {
 		return JSON(c, nil, ecode.RequestErr)
 	}
-	rsp, err := schoolSrv.StudentById(id)
-	return JSON(c, rsp, err)
+
+	//hystrix.Do(config.ProjectName, func() error {
+	//	rsp, err := schoolSrv.StudentById(id)
+	//	JSON(c, rsp, err)
+	//	return err
+	//}, nil)
+	hystrix.Do(config.ProjectName, func() error {
+		rsp, err := schoolSrv.StudentById(id)
+		JSON(c, rsp, err)
+		return err
+	}, func(e error) error {
+		fmt.Println("studentById 熔断机制触发:", e)
+		JSON(c, nil, ecode.ServerBusy)
+		return e
+	})
+	return nil
 }
 
 func teacherAdd(c echo.Context) error {
@@ -62,4 +89,8 @@ func teacherById(c echo.Context) error {
 	}
 	rsp, err := schoolSrv.TeacherById(id)
 	return JSON(c, rsp, err)
+}
+
+func sasas() {
+
 }

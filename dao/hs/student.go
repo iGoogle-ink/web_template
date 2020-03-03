@@ -25,6 +25,7 @@ func (d *Dao) TxStudentInsert(tx *xorm.Session, stu *dbmodel.HsStudent) (id int,
 
 func (d *Dao) StudentByIds(ids []int) (stu []*hs.Student, err error) {
 	err = d.DB.Table(_TableHsStudent).Cols("id", "name", "age", "gender", "ctime", "mtime").Where("is_delete = 0").In("id", ids).Find(&stu)
+	d.DB.Query()
 	if err != nil {
 		return nil, err
 	}

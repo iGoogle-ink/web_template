@@ -2,6 +2,7 @@ package hs
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -35,4 +36,14 @@ func TestDao_CacheTeacherById(t *testing.T) {
 		return
 	}
 	fmt.Println(tch)
+}
+
+func TestSss(t *testing.T) {
+	var sb strings.Builder
+	sb.WriteString(" asdd ")
+	temp := strings.TrimSpace(sb.String())
+	sb.Reset()
+	sb.WriteString(temp)
+	fmt.Println("::", sb.String())
+
 }

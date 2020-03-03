@@ -13,6 +13,7 @@ var (
 	Unauthorized = add(401, "未授权")
 	NothingFound = add(404, "啥都木有")
 	ServerErr    = add(500, "服务器错误")
+	ServerBusy   = add(502, "服务器忙，请稍微尝试")
 
 	// todo some error code and msg to add
 )
