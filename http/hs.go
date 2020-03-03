@@ -22,17 +22,40 @@ func studentAdd(c echo.Context) error {
 	return JSON(c, nil, schoolSrv.StudentAdd(req))
 }
 
+//var count int32 =0
+
 func studentList(c echo.Context) error {
 	//hystrix.Do(config.ProjectName, func() error {
 	//	rsp, err := schoolSrv.StudentList()
 	//	return JSON(c, rsp, err)
 	//}, nil)
+	var (
+		rsp *hs.StudentListRsp
+		err error
+	)
+	//atomic.AddInt32(&count,1)
+	//fmt.Println(count)
 	hystrix.Do(config.ProjectName, func() error {
-		rsp, err := schoolSrv.StudentList()
-		return JSON(c, rsp, err)
+		rsp, err = schoolSrv.StudentList()
+		if err == nil {
+			JSON(c, rsp, nil)
+		}
+		return err
 	}, func(e error) error {
-		fmt.Println("studentList 熔断机制触发:", e)
-		JSON(c, nil, ecode.ServerBusy)
+		switch e {
+		case hystrix.ErrCircuitOpen:
+			fmt.Println("studentList 熔断开启:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		case hystrix.ErrMaxConcurrency:
+			fmt.Println("studentList 熔断超过最大并发:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		case hystrix.ErrTimeout:
+			fmt.Println("studentList 熔断超时:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		default:
+			fmt.Println("studentList default:", e)
+			JSON(c, nil, e)
+		}
 		return e
 	})
 	return nil
@@ -55,11 +78,24 @@ func studentById(c echo.Context) error {
 	//}, nil)
 	hystrix.Do(config.ProjectName, func() error {
 		rsp, err := schoolSrv.StudentById(id)
-		JSON(c, rsp, err)
+		if err == nil {
+			JSON(c, rsp, nil)
+		}
 		return err
 	}, func(e error) error {
-		fmt.Println("studentById 熔断机制触发:", e)
-		JSON(c, nil, ecode.ServerBusy)
+		switch e {
+		case hystrix.ErrCircuitOpen:
+			fmt.Println("studentList 熔断开启:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		case hystrix.ErrMaxConcurrency:
+			fmt.Println("studentList 熔断超过最大并发:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		case hystrix.ErrTimeout:
+			fmt.Println("studentList 熔断超时:", e)
+			JSON(c, nil, ecode.ServerBusy)
+		default:
+			JSON(c, nil, e)
+		}
 		return e
 	})
 	return nil

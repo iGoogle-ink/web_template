@@ -1,7 +1,9 @@
 package hs
 
 import (
+	"fmt"
 	"log"
+	"math/rand"
 	"time"
 
 	"web_template/ecode"
@@ -63,6 +65,10 @@ func (s *Service) StudentAdd(req *hs.StudentAddReq) (err error) {
 }
 
 func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
+	if rand.Intn(100)/2 == 40 {
+		fmt.Println("test")
+		return nil, errors.New("test")
+	}
 	if s.studentList == nil {
 		if err = s.loadStudents(); err != nil {
 			return nil, err

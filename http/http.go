@@ -1,6 +1,7 @@
 package http
 
 import (
+	"io/ioutil"
 	"net/http"
 
 	"web_template/conf"
@@ -39,7 +40,7 @@ func Init(c *conf.Config, db *xorm.Engine, rds *redis.ClusterClient /*, producer
 	e.Use(middleware.CORS(), middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "remote_ip = ${remote_ip}, method = ${method}, uri = ${uri}, Session = ${header:Session}, status = ${status}.\n",
 	}))
-	//e.Logger.SetOutput(ioutil.Discard)
+	e.Logger.SetOutput(ioutil.Discard)
 	router(e)
 	if err := e.Start(c.HttpServer.Port); err != nil {
 		panic(err)

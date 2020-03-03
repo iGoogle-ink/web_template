@@ -2,10 +2,10 @@
   "prod": {
     "ProjectName": "web_template",
     "Hystrix": {
-      "Timeout": 2000,
+      "Timeout": 1000,
       "MaxConcurrentRequests": 1000,
       "RequestVolumeThreshold": 20,
-      "SleepWindow": 3000,
+      "SleepWindow": 2000,
       "ErrorPercentThreshold": 50
     },
     "Redis": {
@@ -63,10 +63,10 @@
   "test": {
     "ProjectName": "web_template",
     "Hystrix": {
-      "Timeout": 2000,
+      "Timeout": 1000,
       "MaxConcurrentRequests": 1000,
       "RequestVolumeThreshold": 20,
-      "SleepWindow": 3000,
+      "SleepWindow": 2000,
       "ErrorPercentThreshold": 50
     },
     "Redis": {
