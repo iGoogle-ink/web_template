@@ -3,7 +3,7 @@
     "ProjectName": "web_template",
     "Hystrix": {
       "Timeout": 1000,
-      "MaxConcurrentRequests": 1000,
+      "MaxConcurrentRequests": 500,
       "RequestVolumeThreshold": 20,
       "SleepWindow": 2000,
       "ErrorPercentThreshold": 50
@@ -64,7 +64,7 @@
     "ProjectName": "web_template",
     "Hystrix": {
       "Timeout": 1000,
-      "MaxConcurrentRequests": 1000,
+      "MaxConcurrentRequests": 500,
       "RequestVolumeThreshold": 20,
       "SleepWindow": 2000,
       "ErrorPercentThreshold": 50
