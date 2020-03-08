@@ -89,7 +89,7 @@ type QQPay struct {
 }
 
 func init() {
-	flag.StringVar(&env, "env", "", "env")
+	flag.StringVar(&env, "env", "", "env or prod")
 	flag.StringVar(&filePath, "conf", "", "conf file path")
 }
 

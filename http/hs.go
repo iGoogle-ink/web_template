@@ -45,13 +45,13 @@ func studentList(c echo.Context) error {
 		switch e {
 		case hystrix.ErrCircuitOpen:
 			fmt.Println("studentList 熔断开启:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断开启"))
 		case hystrix.ErrMaxConcurrency:
 			fmt.Println("studentList 熔断超过最大并发:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断超过最大并发"))
 		case hystrix.ErrTimeout:
 			fmt.Println("studentList 熔断超时:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断超时"))
 		default:
 			fmt.Println("studentList default:", e)
 			JSON(c, nil, e)
@@ -86,13 +86,13 @@ func studentById(c echo.Context) error {
 		switch e {
 		case hystrix.ErrCircuitOpen:
 			fmt.Println("studentList 熔断开启:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断开启"))
 		case hystrix.ErrMaxConcurrency:
 			fmt.Println("studentList 熔断超过最大并发:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断超过最大并发"))
 		case hystrix.ErrTimeout:
 			fmt.Println("studentList 熔断超时:", e)
-			JSON(c, nil, ecode.ServerBusy)
+			JSON(c, nil, ecode.New(502, "熔断超时"))
 		default:
 			JSON(c, nil, e)
 		}

@@ -30,19 +30,20 @@ func main() {
 	http.Init(conf.Conf, db, rds /*, producer*/)
 
 	//ch := make(chan os.Signal)
-	//
-	//signal.Notify(ch, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT, syscall.SIGSTOP)
+	//fmt.Println("ssssssssssssssssssssssss")
+	//signal.Notify(ch, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
+	//fmt.Println("2222222222222222222222222")
 	//for {
 	//	si := <-ch
 	//	switch si {
-	//	case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGSTOP, syscall.SIGINT:
+	//	case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 	//		time.Sleep(time.Second)
 	//		log.Info("get a signal %s, stop the tv-admin process", si.String())
 	//
-	//		consumer.Stop()
 	//		time.Sleep(time.Second)
 	//		return
 	//	case syscall.SIGHUP:
+	//		fmt.Println("ddddddddddddddddddddddddddddddd")
 	//	default:
 	//		return
 	//	}

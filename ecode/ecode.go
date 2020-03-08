@@ -34,6 +34,11 @@ func add(code int, msg string) Error {
 	return Error(code)
 }
 
+func New(code int, msg string) Error {
+	errorMap.Store(code, msg)
+	return Error(code)
+}
+
 // A Code is an int error code spec.
 type Error int
 
