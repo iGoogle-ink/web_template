@@ -29,16 +29,16 @@ func studentList(c echo.Context) error {
 	//	rsp, err := schoolSrv.StudentList()
 	//	return JSON(c, rsp, err)
 	//}, nil)
-	var (
-		rsp *hs.StudentListRsp
-		err error
-	)
+	//var (
+	//rsp *hs.StudentListRsp
+	//err error
+	//)
 	//atomic.AddInt32(&count,1)
 	//fmt.Println(count)
 	hystrix.Do(config.ProjectName, func() error {
-		rsp, err = schoolSrv.StudentList()
+		rsp, err := schoolSrv.StudentList()
 		if err == nil {
-			JSON(c, rsp, nil)
+			JSON(c, Pager{PageNo: 1, PageSize: 20}.Apply(12, rsp), nil)
 		}
 		return err
 	}, func(e error) error {

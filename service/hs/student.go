@@ -64,7 +64,7 @@ func (s *Service) StudentAdd(req *hs.StudentAddReq) (err error) {
 	return nil
 }
 
-func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
+func (s *Service) StudentList() (rsp []*hs.Student, err error) {
 	if rand.Intn(100)/2 == 40 {
 		fmt.Println("test")
 		return nil, errors.New("test")
@@ -77,13 +77,14 @@ func (s *Service) StudentList() (rsp *hs.StudentListRsp, err error) {
 	if len(s.studentList) == 0 {
 		return nil, ecode.NothingFound
 	}
-	rsp = new(hs.StudentListRsp)
-	for _, v := range s.studentList {
-		sRsp := new(hs.StudentRsp)
-		v.FormatToRsp(sRsp)
-		rsp.StudentList = append(rsp.StudentList, sRsp)
-	}
-	return rsp, nil
+	return s.studentList, nil
+	//rsp = new(hs.StudentListRsp)
+	//for _, v := range s.studentList {
+	//	sRsp := new(hs.StudentRsp)
+	//	v.FormatToRsp(sRsp)
+	//	rsp.StudentList = append(rsp.StudentList, sRsp)
+	//}
+	//return rsp, nil
 }
 
 func (s *Service) StudentById(id int) (rsp *hs.StudentRsp, err error) {
