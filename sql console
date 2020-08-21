@@ -1,4 +1,4 @@
-CREATE DATABASE `bilibili_tv` /*!40100 DEFAULT CHARACTER SET utf8 */;
+CREATE DATABASE `bilibili_tv` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 
 use bilibili_tv;
 
@@ -29,7 +29,7 @@ CREATE TABLE `tv_price_config`
     KEY `ix_mtime` (`mtime`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
-  DEFAULT CHARSET = utf8 COMMENT ='价格配置表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='价格配置表';
 
 alter table tv_price_config
     add first_price int(11) NOT NULL DEFAULT 0 COMMENT '连续包月首月价格，sub_type 为1时，此字段生效';
@@ -105,7 +105,7 @@ CREATE TABLE `tv_live`
     KEY `ix_live_room` (`live_room`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 8
-  DEFAULT CHARSET = utf8 COMMENT ='直播资源表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='直播资源表';
 
 CREATE TABLE `bestv_season`
 (
@@ -161,5 +161,5 @@ CREATE TABLE `bestv_season`
     KEY `ix_mtime` (`mtime`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 15986
-  DEFAULT CHARSET = utf8 COMMENT ='百视通season表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='百视通season表';
 
