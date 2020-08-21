@@ -1,0 +1,35 @@
+Name: web_template
+NumCPU: 0
+AppKey:
+  - mX6eDsfizm0omIxl4iwfHU9G03Hb5o8V
+Web:
+  Port: :2233
+  Limit:
+    Rate: 100
+    BucketSize: 100
+Redis:
+  Addrs:
+    - db.igoogle.ink:6379
+  Password:
+  DB: 1
+MySQL:
+  DSN: lufei:Lufei2233.@tcp(db.igoogle.ink:3306)/one_piece?timeout=10s&readTimeout=10s&writeTimeout=10s&parseTime=true&loc=Local&charset=utf8mb4,utf8
+  Active: 1000
+  Idle: 100
+  IdleTimeout: 10
+  ShowSQL: true
+WeChatPay:
+  Appid: wxdaa2ab9ef87b5497
+  MchId: 1368139502
+  ApiKey: GFDS8j98rewnmgl45wHTt980jg543abc
+  IsProd: true
+  CertFilePath: apiclient_cert.pem
+  KeyFilePath: piclient_key.pem
+  Pkcs12FilePath: apiclient_cert.p12
+AliPay:
+  Appid: 2016091200494382
+  PrivateKey: MIIEogIBAAKCAQEAy+CRzKw4krA2RzCDTqg5KJg92XkOY0RN3pW4sYInP
+  IsProd: true
+  AppCertPath: appCertPublicKey.crt
+  RootCertPath: alipayRootCert.crt
+  PublicCertPath: alipayCertPublicKey_RSA2.crt
