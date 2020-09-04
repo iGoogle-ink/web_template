@@ -31,7 +31,7 @@ func main() {
 		switch si {
 		case syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT:
 			time.Sleep(time.Second)
-			xlog.Warningf("%s: get a signal %s, stop the process", config.Conf.Name, si.String())
+			xlog.Warnf("%s: get a signal %s, stop the process", config.Conf.Name, si.String())
 			svc.Close()
 			time.Sleep(time.Second)
 			return
